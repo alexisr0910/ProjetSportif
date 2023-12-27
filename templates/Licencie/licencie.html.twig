@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+  Licencié
+{% endblock %}
+
+{% block body %}
+  <div class="container mt-4">
+    <h1 class="display-4">Licencie</h1>
+    <hr class="my-4" />
+
+    {% if licencie|length > 0 %}
+      <div class="count mt-3">
+        <h5>Il y a {{ licencie.getTotalItemCount }} licenciés au total</h5>
+      </div>
+
+      <table class="table table-hover table-dark mt-5">
+        <thead>
+          <tr>
+            <th scope="col">Id Licencie</th>
+            <th scope="col">Nom</th>
+            <th scope="col">Prénom</th>
+            <th scope="col">Catégorie</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for licencie in licencie %}
+            <tr>
+              <th scope="row">{{ licencie.numlicence }}</th>
+              <td>{{ licencie.nom }}</td>
+              <td>{{ licencie.prenom }}</td>
+              <td>{{ licencie.categorie }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <div class="navigation d-flex justify-content-center">{{ knp_pagination_render(licencie) }}</div>
+    {% else %}
+      <h5>Il n'y a pas de licenciés</h5>
+    {% endif %}
+  </div>
+{% endblock %}

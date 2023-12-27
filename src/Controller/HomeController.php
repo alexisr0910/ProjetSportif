@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\LicencieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -11,14 +12,14 @@ use Symfony\Component\Routing\Annotation\Route;
 use Twig\Environment;
 
 class HomeController extends AbstractController
-{
-    /**
-     * @Route("/" , name="home", methods={"GET","POST"})
-     */
-
-    public function home(Environment $twig): Response
+{/**
+ * Affiche la page home
+ *
+ * @return Response
+ */
+    #[Route("/", name: "home", methods: ["GET", "POST"])]
+    public function home(): Response
     {
-        $html = $twig->render('home.html.twig');
-        return new Response($html);
+        return $this->render('pages/home.html.twig');
     }
 }

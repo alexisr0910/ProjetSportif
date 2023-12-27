@@ -21,41 +21,44 @@ class AppFixtures extends Fixture
     }
     public function load(ObjectManager $manager): void
     {
-        for ($i = 0; $i < 10; $i++) {
-            $licencie = new Licencie();
-            $licencie
-                ->setIdLicencie(mt_rand(29999, 40000))
-                ->setNomLicencie('NomLicencie ' . $this->faker->word())
-                ->setPrenomLicencie('PrenomLicencie  ' . $this->faker->word())
-                ->setCategorie('categorie' . $this->faker->word());
-            $manager->persist($licencie);
+        for ($i = 0; $i < 40; $i++) {
+           
 
             $educateur = new Educateur();
             $educateur
-                ->setIdEducateur(mt_rand(0, 9999))
-                ->setEmailEducateur('emaileducateur  ' . $this->faker->word())
+                ->setEmail('emaileducateur  ' . $this->faker->word())
                 ->setMdp('motdepasse  ' . $this->faker->word());
 
             $manager->persist($educateur);
 
             $contact = new Contact();
             $contact
-                ->setIdContact(mt_rand(10000, 19999))
-                ->setNomContact('nomContact  ' . $this->faker->word())
-                ->setPrenomContact('prenomContact  ' . $this->faker->word())
-                ->setEmailContact('emailContact  ' . $i)
+                ->setNom('nomContact  ' . $this->faker->word())
+                ->setPrenom('prenomContact  ' . $this->faker->word())
+                ->setEmail('emailContact  ' . $i)
                 ->setNumeroTel($this->faker->randomNumber(4, true));
 
             $manager->persist($contact);
+            
 
 
             $categorie = new Categorie();
             $categorie
-                ->setIdCategorie(mt_rand(19999, 29999))
                 ->setNomCategorie('m  ' . $this->faker->word())
                 ->setCodeRaccourcie('m' . $this->faker->randomNumber(2, true));
 
             $manager->persist($categorie);
+
+            $licencie = new Licencie();
+            $licencie
+                ->setContact($contact)
+                ->setCategorie($categorie)
+                ->setNom('NomLicencie ' . $this->faker->word())
+                ->setPrenom('PrenomLicencie  ' . $this->faker->word())
+                ->setNumLicence(mt_rand(0, 9999));
+                
+            $manager->persist($licencie);
+
         }
 
         $manager->flush();

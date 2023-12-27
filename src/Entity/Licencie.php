@@ -3,9 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\LicencieRepository;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: LicencieRepository::class)]
 class Licencie
@@ -15,118 +13,95 @@ class Licencie
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::BIGINT, nullable: true)]
-    private ?string $id_licencie = null;
-
-    #[ORM\OneToOne(inversedBy: 'accessLicencie', cascade: ['persist', 'remove'])]
-    private ?contact $id_contact = null;
-
-    #[ORM\OneToOne(inversedBy: 'accessLicencie', cascade: ['persist', 'remove'])]
-    private ?educateur $id_educateur = null;
-
-    #[ORM\ManyToOne(inversedBy: 'accessLicencie')]
-    private ?categorie $nomCategorie = null;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $nom = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $nomLicencie = null;
+    private ?string $prenom = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $prenomLicencie = null;
+    #[ORM\Column(nullable: true)]
+    private ?int $numLicence = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $categorie = null;
+    #[ORM\OneToOne(mappedBy: 'contact', cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable:true, onDelete:'SET NULL')]
+    private ?Contact $contact = null;
 
-  
-
-    
+    #[ORM\ManyToOne(inversedBy: 'categorie')]
+    #[ORM\JoinColumn(nullable:true, onDelete:'SET NULL')]
+    private ?Categorie $categorie = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getIdLicencie(): ?string
+    public function getNom(): ?string
     {
-        return $this->id_licencie;
+        return $this->nom;
     }
 
-    public function setIdLicencie(?string $id_licencie): static
+    public function setNom(?string $nom): static
     {
-        $this->id_licencie = $id_licencie;
+        $this->nom = $nom;
 
         return $this;
     }
 
-    public function getIdContact(): ?contact
+    public function getPrenom(): ?string
     {
-        return $this->id_contact;
+        return $this->prenom;
     }
 
-    public function setIdContact(?contact $id_contact): static
+    public function setPrenom(?string $prenom): static
     {
-        $this->id_contact = $id_contact;
+        $this->prenom = $prenom;
 
         return $this;
     }
 
-    public function getIdEducateur(): ?educateur
+    public function getNumLicence(): ?int
     {
-        return $this->id_educateur;
+        return $this->numLicence;
     }
 
-    public function setIdEducateur(?educateur $id_educateur): static
+    public function setNumLicence(?int $numLicence): static
     {
-        $this->id_educateur = $id_educateur;
+        $this->numLicence = $numLicence;
 
         return $this;
     }
 
-    public function getNomCategorie(): ?categorie
+    public function getContact(): ?Contact
     {
-        return $this->nomCategorie;
+        return $this->contact;
     }
 
-    public function setNomCategorie(?categorie $nomCategorie): static
+    public function setContact(?Contact $contact): static
     {
-        $this->nomCategorie = $nomCategorie;
+        // unset the owning side of the relation if necessary
+        if ($contact === null && $this->contact!== null) {
+            $this->contact->setContact(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($contact!== null && $contact->getContact() !== $this) {
+            $contact->setContact($this);
+        }
+
+        $this->contact= $contact;
 
         return $this;
     }
 
-    public function getNomLicencie(): ?string
-    {
-        return $this->nomLicencie;
-    }
-
-    public function setNomLicencie(?string $nomLicencie): static
-    {
-        $this->nomLicencie = $nomLicencie;
-
-        return $this;
-    }
-
-    public function getPrenomLicencie(): ?string
-    {
-        return $this->prenomLicencie;
-    }
-
-    public function setPrenomLicencie(?string $prenomLicencie): static
-    {
-        $this->prenomLicencie = $prenomLicencie;
-
-        return $this;
-    }
-
-    public function getCategorie(): ?string
+    public function getCategorie(): ?Categorie
     {
         return $this->categorie;
     }
 
-    public function setCategorie(?string $categorie): static
+    public function setCategorie(?Categorie $categorie): static
     {
-        $this->categorie = $categorie;
+        $this->categorie= $categorie;
 
         return $this;
     }
-
 }

@@ -3,9 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ContactRepository;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ContactRepository::class)]
 class Contact
@@ -15,73 +13,70 @@ class Contact
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::BIGINT, nullable: true)]
-    private ?string $id_contact = null;
+    #[ORM\OneToOne(inversedBy: 'contact', cascade: ['persist', 'remove'])]
+    private ?licencie $contact = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $nomContact = null;
+    private ?string $nom = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $prenomContact = null;
+    private ?string $prenom = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $emailContact = null;
+    private ?string $email = null;
 
-    #[ORM\Column(type: Types::BIGINT, nullable: true)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $numeroTel = null;
-
-    #[ORM\OneToOne(mappedBy: 'id_contact', cascade: ['persist', 'remove'])]
-    private ?Licencie $accessLicencie = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getIdContact(): ?string
+    public function getContact(): ?licencie
     {
-        return $this->id_contact;
+        return $this->contact;
     }
 
-    public function setIdContact(?string $id_contact): static
+    public function setContact(?licencie $contact): static
     {
-        $this->id_contact = $id_contact;
+        $this->contact = $contact;
 
         return $this;
     }
 
-    public function getNomContact(): ?string
+    public function getNom(): ?string
     {
-        return $this->nomContact;
+        return $this->nom;
     }
 
-    public function setNomContact(?string $nomContact): static
+    public function setNom(?string $nom): static
     {
-        $this->nomContact = $nomContact;
+        $this->nom = $nom;
 
         return $this;
     }
 
-    public function getPrenomContact(): ?string
+    public function getPrenom(): ?string
     {
-        return $this->prenomContact;
+        return $this->prenom;
     }
 
-    public function setPrenomContact(?string $prenomContact): static
+    public function setPrenom(?string $prenom): static
     {
-        $this->prenomContact = $prenomContact;
+        $this->prenom = $prenom;
 
         return $this;
     }
 
-    public function getEmailContact(): ?string
+    public function getEmail(): ?string
     {
-        return $this->emailContact;
+        return $this->email;
     }
 
-    public function setEmailContact(?string $emailContact): static
+    public function setEmail(?string $email): static
     {
-        $this->emailContact = $emailContact;
+        $this->email = $email;
 
         return $this;
     }
@@ -94,28 +89,6 @@ class Contact
     public function setNumeroTel(?string $numeroTel): static
     {
         $this->numeroTel = $numeroTel;
-
-        return $this;
-    }
-
-    public function getAccessLicencie(): ?Licencie
-    {
-        return $this->accessLicencie;
-    }
-
-    public function setAccessLicencie(?Licencie $accessLicencie): static
-    {
-        // unset the owning side of the relation if necessary
-        if ($accessLicencie === null && $this->accessLicencie !== null) {
-            $this->accessLicencie->setIdContact(null);
-        }
-
-        // set the owning side of the relation if necessary
-        if ($accessLicencie !== null && $accessLicencie->getIdContact() !== $this) {
-            $accessLicencie->setIdContact($this);
-        }
-
-        $this->accessLicencie = $accessLicencie;
 
         return $this;
     }
