@@ -10,17 +10,15 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Twig\Environment;
 
-class IndexController extends AbstractController
-
+class HomeController extends AbstractController
 {
     /**
-     * @Route("/" , name="home",
-    methods={"GET","POST"})
+     * @Route("/" , name="home", methods={"GET","POST"})
      */
 
     public function home(Environment $twig): Response
     {
-        $html = $twig->render('base.html.twig');
+        $html = $twig->render('home.html.twig');
         return new Response($html);
     }
 }
