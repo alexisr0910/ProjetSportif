@@ -14,7 +14,7 @@ class IndexController extends AbstractController
 
 {
     /**
-     * @Route("/home/" , name="home",
+     * @Route("/" , name="home",
     methods={"GET","POST"})
      */
 
