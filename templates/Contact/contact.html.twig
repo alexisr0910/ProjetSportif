@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+  Contacts
+{% endblock %}
+
+{% block body %}
+  <div class="container mt-4">
+    <h1 class="display-4">
+      Contacts
+    </h1>
+
+    <a href="{{ path('newContact') }}" class="btn btn-primary">
+      Créer un contact
+    </a>
+
+    <hr class="my-4" />
+
+    {% for message in app.flashes('success') %}
+      <div class="alert alert-success mt-4">
+        {{ message }}
+      </div>
+    {% endfor %}
+
+    {% if contact|length > 0 %}
+      <div class="count mt-3">
+        <h5>
+          Il y a {{ contact.getTotalItemCount }} contacts au total
+        </h5>
+      </div>
+
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Nom</th>
+            <th scope="col">Prénom</th>
+            <th scope="col">Email</th>
+            <th scope="col">Numéro de téléphone</th>
+          <th scope="col">Edition</th>
+          <th scope="col">Suppression</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          {% for contact in contact %}
+            <tr>
+              <th scope="row">{{ contact.nom }}</th>
+              <td>{{ contact.prenom }}</td>
+              <td>{{ contact.email }}</td>
+              <td>{{ contact.numerotel }}</td>
+              <td><a href="{{ path('updateContact', {id: contact.id}) }}" class="btn btn-secondary">Modifier</a></td>
+              <td><a href="{{ path('deleteContact', {id: contact.id}) }}" class="btn btn-danger">Supprimer</a></td>
+
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <div class="navigation d-flex justify-content-center">
+        {{ knp_pagination_render(contact) }}
+      </div>
+    {% else %}
+      <h5>
+        Il n'y a pas de contacts
+      </h5>
+    {% endif %}
+  </div>
+{% endblock %}

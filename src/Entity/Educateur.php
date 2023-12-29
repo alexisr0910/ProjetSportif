@@ -13,11 +13,26 @@ class Educateur
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\OneToOne(inversedBy: 'educateur', cascade: ['persist', 'remove'])]
+    private ?licencie $educateur = null;
+
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $email = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $mdp = null;
+
+    public function getEducateur(): ?licencie
+    {
+        return $this->educateur;
+    }
+
+    public function setEducateur(?licencie $educateur): static
+    {
+        $this->educateur = $educateur;
+
+        return $this;
+    }
 
     public function getId(): ?int
     {

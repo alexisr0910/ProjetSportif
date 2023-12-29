@@ -26,6 +26,10 @@ class Licencie
     #[ORM\JoinColumn(nullable:true, onDelete:'SET NULL')]
     private ?Contact $contact = null;
 
+    #[ORM\OneToOne(mappedBy: 'educateur', cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable:true, onDelete:'SET NULL')]
+    private ?Educateur $educateur = null;
+
     #[ORM\ManyToOne(inversedBy: 'categorie')]
     #[ORM\JoinColumn(nullable:true, onDelete:'SET NULL')]
     private ?Categorie $categorie = null;
@@ -89,6 +93,28 @@ class Licencie
         }
 
         $this->contact= $contact;
+
+        return $this;
+    }
+
+    public function getEducateur(): ?Educateur
+    {
+        return $this->educateur;
+    }
+
+    public function setEducateur(?Educateur $educateur): static
+    {
+        // unset the owning side of the relation if necessary
+        if ($educateur === null && $this->educateur!== null) {
+            $this->educateur->setEducateur(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($educateur!== null && $educateur->getEducateur() !== $this) {
+            $educateur->setEducateur($this);
+        }
+
+        $this->educateur= $educateur;
 
         return $this;
     }

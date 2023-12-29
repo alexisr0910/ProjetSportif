@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+  Catégories
+{% endblock %}
+
+
+
+{% block body %}
+  <div class="container mt-4">
+    <h1 class="display-4">Catégories</h1>
+    <hr class="my-4" />
+
+    {% if categorie|length > 0 %}
+      <div class="count mt-3">
+        <h5>Il y a {{categorie.getTotalItemCount }} catégories au total</h5>
+      </div>
+
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Nom catégories</th>
+            <th scope="col">Code raccourcie</th>
+            
+          </tr>
+        </thead>
+        <tbody>
+          {% for categorie in categorie %}
+            <tr>
+              <th scope="row">{{ categorie.nomcategorie }}</th>
+              <td>{{ categorie.coderaccourcie }}</td>
+
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <div class="navigation d-flex justify-content-center">{{ knp_pagination_render(categorie) }}</div>
+    {% else %}
+      <h5>Il n'y a pas de categorie</h5>
+    {% endif %}
+  </div>
+{% endblock %}

@@ -89,6 +89,6 @@ class Categorie
     }
     public function __toString()
     {
-        return $this->nomCategorie; // Retournez la propriété appropriée à afficher
+        return $this->nomCategorie; 
     }
 }

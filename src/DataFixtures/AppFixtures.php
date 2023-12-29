@@ -53,6 +53,7 @@ class AppFixtures extends Fixture
             $licencie
                 ->setContact($contact)
                 ->setCategorie($categorie)
+                ->setEducateur($educateur)
                 ->setNom('NomLicencie ' . $this->faker->word())
                 ->setPrenom('PrenomLicencie  ' . $this->faker->word())
                 ->setNumLicence(mt_rand(0, 9999));

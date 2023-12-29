@@ -1,0 +1,103 @@
+body {
+    background-color: #161029    ; /* Couleur de fond du corps */
+    color: #ecf0f1; /* Couleur du texte par défaut */
+  }
+
+  .container {
+    background-color: #34495e; /* Couleur de fond de la zone de contenu */
+    border-radius: 10px; /* Coins arrondis */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Ombre légère */
+    padding: 20px; /* Marge intérieure */
+  }
+
+  h1 {
+    color: #6f69e6; /* Couleur du titre */
+  }
+
+  .count h5 {
+    color: #6f69e6; /* Couleur du texte pour le compteur */
+  }
+
+  table {
+    background-color: #6f69e6; /* Couleur de fond du tableau */
+    color: #ffffff; /* Couleur du texte dans le tableau */
+  }
+
+  table th, table td {
+    border: none; /* Supprime les bordures */
+  }
+
+  table th {
+    background-color: #6f69e6; /* Couleur de fond de l'en-tête du tableau */
+  }
+
+  table tbody tr:hover {
+    background-color: #6f69e6; /* Couleur de fond au survol des lignes */
+    color: #ffffff; /* Couleur du texte au survol des lignes */
+  }
+
+  .navigation {
+    margin-top: 20px; /* Marge supérieure pour la navigation */
+  }
+
+  .pagination {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+  }
+
+  .pagination li {
+    margin: 0 5px;
+  }
+
+  .pagination a, .pagination span {
+    color: #3498db;
+    text-decoration: none;
+    padding: 8px 12px;
+    border: 1px solid #3498db;
+    border-radius: 5px;
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+  }
+
+  .pagination a:hover {
+    background-color: #6f69e6;
+    color: #ffffff;
+  }
+
+  .navbar {
+    background-color: #6610f2; /* Nouvelle couleur de fond de la barre de navigation */
+    border-radius: 10px; /* Coins arrondis */
+  }
+
+  .navbar-brand,
+  .navbar-nav .nav-link {
+    color: #ffffff; /* Couleur du texte par défaut */
+    transition: color 0.3s ease-in-out; /* Transition de couleur */
+  }
+
+  .navbar-brand:hover,
+  .navbar-nav .nav-link:hover {
+    color: #ffffff; /* Couleur du texte au survol */
+  }
+
+  .navbar-toggler-icon {
+    background-color: #ffffff; /* Couleur de l'icône du bouton de bascule */
+  }
+
+  .navbar-toggler:focus,
+  .navbar-toggler:active {
+    outline: none; /* Supprime la bordure du bouton de bascule lorsqu'il est en focus ou actif */
+  }
+
+  .navbar-toggler:hover {
+    background-color: #ffffff; /* Couleur de fond du bouton de bascule au survol */
+  }
+
+  .navbar-nav .nav-link {
+    transition: transform 0.3s ease-in-out; /* Transition de transformation au survol */
+  }
+
+  .navbar-nav .nav-link:hover {
+    transform: scale(1.2); /* Agrandit au survol */
+  }

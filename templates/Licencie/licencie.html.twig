@@ -4,9 +4,11 @@
   Licencié
 {% endblock %}
 
+
+
 {% block body %}
   <div class="container mt-4">
-    <h1 class="display-4">Licencie</h1>
+    <h1 class="display-4">Licencié</h1>
     <hr class="my-4" />
 
     {% if licencie|length > 0 %}
@@ -14,7 +16,7 @@
         <h5>Il y a {{ licencie.getTotalItemCount }} licenciés au total</h5>
       </div>
 
-      <table class="table table-hover table-dark mt-5">
+      <table class="table table-hover">
         <thead>
           <tr>
             <th scope="col">Id Licencie</th>

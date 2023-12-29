@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+  Educateurs
+{% endblock %}
+
+
+
+{% block body %}
+  <div class="container mt-4">
+    <h1 class="display-4">Educateur</h1>
+    <hr class="my-4" />
+
+    {% if educateur|length > 0 %}
+      <div class="count mt-3">
+        <h5>Il y a {{ educateur.getTotalItemCount }} éducateur au total</h5>
+      </div>
+
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Email</th>
+            <th scope="col">Mot de passe</th>
+            
+          </tr>
+        </thead>
+        <tbody>
+          {% for educateur in educateur %}
+            <tr>
+              <th scope="row">{{ educateur.email }}</th>
+              <td>{{ educateur.mdp }}</td>
+
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <div class="navigation d-flex justify-content-center">{{ knp_pagination_render(educateur) }}</div>
+    {% else %}
+      <h5>Il n'y a pas d'éducateur</h5>
+    {% endif %}
+  </div>
+{% endblock %}
