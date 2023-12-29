@@ -4,8 +4,14 @@ namespace App\Entity;
 
 use App\Repository\EducateurRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
+
+
 
 #[ORM\Entity(repositoryClass: EducateurRepository::class)]
+
+#[UniqueEntity('email')]
 class Educateur
 {
     #[ORM\Id]
@@ -17,9 +23,13 @@ class Educateur
     private ?licencie $educateur = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\NotBlank()]
+
     private ?string $email = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\NotBlank()]
+
     private ?string $mdp = null;
 
     public function getEducateur(): ?licencie

@@ -2,22 +2,27 @@
 
 namespace App\Form;
 
-use App\Entity\Contact;
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use App\Entity\Categorie;
+use App\Entity\Licencie;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TelType;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormError;
+
 use Symfony\Component\Validator\Constraints as Assert;
 
 
-class ContactType extends AbstractType
+class LicencieType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nom', \Symfony\Component\Form\Extension\Core\Type\TextType::class, [
+            ->add('nom', TextType::class, [
                 'attr' => [
                     'class' => 'form-control',
                     'minlength' => '2',
@@ -32,8 +37,7 @@ class ContactType extends AbstractType
                     new Assert\NotBlank()
                 ]
             ])
-
-            ->add('prenom', \Symfony\Component\Form\Extension\Core\Type\TextType::class, [
+            ->add('prenom', TextType::class, [
                 'attr' => [
                     'class' => 'form-control',
                     'minlength' => '2',
@@ -48,35 +52,12 @@ class ContactType extends AbstractType
                     new Assert\NotBlank()
                 ]
             ])
-            ->add('email', EmailType::class, [
-                'attr' => [
-                    'class' => 'form-control',
-                    'maxlength' => '255'
-                ],
-                'label' => 'Email',
-                'label_attr' => [
-                    'class' => 'form-label mt-4'
-                ],
-                'constraints' => [
-                    new Assert\Email(['message' => 'Veuillez entrer une adresse email valide.']),
-                    new Assert\NotBlank()
-                ]
-            ])
-            ->add('numeroTel', TelType::class, [
-                'attr' => [
-                    'class' => 'form-control',
-                    'maxlength' => '15'
-                ],
-                'label' => 'Numéro de téléphone',
-                'label_attr' => [
-                    'class' => 'form-label mt-4'
-                ],
-                'constraints' => [
-                    new Assert\Regex(['pattern' => '/^\+?\d{0,15}$/', 'message' => 'Veuillez entrer un numéro de téléphone valide.']),
-                    new Assert\NotBlank()
-                ]
-            ])
 
+            ->add('categorie', EntityType::class, [
+                'class' => Categorie::class,
+                'choice_label' => 'nomCategorie',
+            ])
+          
             ->add('submit', SubmitType::class, [
                 'attr' => [
                     'class' => 'btn btn-primary mt-4'
@@ -89,7 +70,7 @@ class ContactType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Contact::class,
+            'data_class' => Licencie::class,
         ]);
     }
 }

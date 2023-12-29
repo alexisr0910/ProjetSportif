@@ -4,8 +4,14 @@ namespace App\Entity;
 
 use App\Repository\LicencieRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
+
+
 
 #[ORM\Entity(repositoryClass: LicencieRepository::class)]
+#[UniqueEntity('numLicence')]
+
 class Licencie
 {
     #[ORM\Id]
@@ -14,9 +20,13 @@ class Licencie
     private ?int $id = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\NotBlank()]
+
     private ?string $nom = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\NotBlank()]
+
     private ?string $prenom = null;
 
     #[ORM\Column(nullable: true)]

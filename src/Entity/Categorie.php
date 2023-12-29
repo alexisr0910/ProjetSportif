@@ -6,8 +6,13 @@ use App\Repository\CategorieRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
+
+
 
 #[ORM\Entity(repositoryClass: CategorieRepository::class)]
+#[UniqueEntity('nomCategorie')]
 class Categorie
 {
     #[ORM\Id]
@@ -19,9 +24,12 @@ class Categorie
     private Collection $categorie;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\NotBlank()]
     private ?string $nomCategorie = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\NotBlank()]
+
     private ?string $codeRaccourcie = null;
 
     public function __construct()
@@ -89,6 +97,6 @@ class Categorie
     }
     public function __toString()
     {
-        return $this->nomCategorie; 
+        return $this->nomCategorie;
     }
 }

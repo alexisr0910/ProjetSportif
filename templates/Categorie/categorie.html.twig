@@ -11,6 +11,19 @@
     <h1 class="display-4">Catégories</h1>
     <hr class="my-4" />
 
+    <a href="{{ path('newCategorie') }}" class="btn btn-primary">
+      Créer une catégorie
+    </a>
+
+    <hr class="my-4" />
+
+    {% for message in app.flashes('success') %}
+      <div class="alert alert-success mt-4">
+        {{ message }}
+      </div>
+    {% endfor %}
+
+
     {% if categorie|length > 0 %}
       <div class="count mt-3">
         <h5>Il y a {{categorie.getTotalItemCount }} catégories au total</h5>
@@ -21,6 +34,8 @@
           <tr>
             <th scope="col">Nom catégories</th>
             <th scope="col">Code raccourcie</th>
+          <th scope="col">Edition</th>
+        <th scope="col">Suppression</th>
             
           </tr>
         </thead>
@@ -29,6 +44,8 @@
             <tr>
               <th scope="row">{{ categorie.nomcategorie }}</th>
               <td>{{ categorie.coderaccourcie }}</td>
+              <td><a href="{{ path('updateCategorie', {id: categorie.id}) }}" class="btn btn-secondary">Modifier</a></td>
+              <td><a href="{{ path('deleteCategorie', {id: categorie.id}) }}" class="btn btn-danger">Supprimer</a></td>
 
             </tr>
           {% endfor %}

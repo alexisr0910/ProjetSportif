@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\ContactRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: ContactRepository::class)]
 #[UniqueEntity('numeroTel')]
@@ -20,15 +22,23 @@ class Contact
     private ?licencie $contact = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\NotBlank()]
+
     private ?string $nom = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\NotBlank()]
+
     private ?string $prenom = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\NotBlank()]
+
     private ?string $email = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\NotBlank()]
+
     private ?string $numeroTel = null;
 
     public function getId(): ?int

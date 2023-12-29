@@ -22,7 +22,7 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         for ($i = 0; $i < 40; $i++) {
-           
+
 
             $educateur = new Educateur();
             $educateur
@@ -33,19 +33,19 @@ class AppFixtures extends Fixture
 
             $contact = new Contact();
             $contact
-                ->setNom('nomContact  ' . $this->faker->word())
-                ->setPrenom('prenomContact  ' . $this->faker->word())
-                ->setEmail('emailContact  ' . $i)
+                ->setNom($this->faker->word())
+                ->setPrenom($this->faker->word())
+                ->setEmail($this->faker->email())
                 ->setNumeroTel($this->faker->randomNumber(4, true));
 
             $manager->persist($contact);
-            
+
 
 
             $categorie = new Categorie();
             $categorie
-                ->setNomCategorie('m  ' . $this->faker->word())
-                ->setCodeRaccourcie('m' . $this->faker->randomNumber(2, true));
+                ->setNomCategorie($this->faker->word())
+                ->setCodeRaccourcie($this->faker->randomNumber(2, true));
 
             $manager->persist($categorie);
 
@@ -54,10 +54,12 @@ class AppFixtures extends Fixture
                 ->setContact($contact)
                 ->setCategorie($categorie)
                 ->setEducateur($educateur)
-                ->setNom('NomLicencie ' . $this->faker->word())
-                ->setPrenom('PrenomLicencie  ' . $this->faker->word())
+                ->setNom($this->faker->word())
+                ->setPrenom($this->faker->word())
                 ->setNumLicence(mt_rand(0, 9999));
                 
+                
+
             $manager->persist($licencie);
 
         }

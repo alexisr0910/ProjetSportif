@@ -11,6 +11,18 @@
     <h1 class="display-4">Licencié</h1>
     <hr class="my-4" />
 
+    <a href="{{ path('newLicencie') }}" class="btn btn-primary">
+      Créer un licencie
+    </a>
+
+    <hr class="my-4" />
+
+    {% for message in app.flashes('success') %}
+      <div class="alert alert-success mt-4">
+        {{ message }}
+      </div>
+    {% endfor %}
+
     {% if licencie|length > 0 %}
       <div class="count mt-3">
         <h5>Il y a {{ licencie.getTotalItemCount }} licenciés au total</h5>
@@ -19,10 +31,12 @@
       <table class="table table-hover">
         <thead>
           <tr>
-            <th scope="col">Id Licencie</th>
+            <th scope="col">Numéroe de Licencie</th>
             <th scope="col">Nom</th>
             <th scope="col">Prénom</th>
             <th scope="col">Catégorie</th>
+          <th scope="col">Edition</th>
+        <th scope="col">Suppression</th>
           </tr>
         </thead>
         <tbody>
@@ -32,6 +46,8 @@
               <td>{{ licencie.nom }}</td>
               <td>{{ licencie.prenom }}</td>
               <td>{{ licencie.categorie }}</td>
+              <td><a href="{{ path('updateLicencie', {id: licencie.id}) }}" class="btn btn-secondary">Modifier</a></td>
+              <td><a href="{{ path('deleteLicencie', {id: licencie.id}) }}" class="btn btn-danger">Supprimer</a></td>
             </tr>
           {% endfor %}
         </tbody>
