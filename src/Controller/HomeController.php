@@ -12,11 +12,13 @@ use Symfony\Component\Routing\Annotation\Route;
 use Twig\Environment;
 
 class HomeController extends AbstractController
-{/**
- * Affiche la page home
- *
- * @return Response
- */
+{ 
+    
+  /**
+  * Affiche la page home
+  *
+  * @return Response
+  */
     #[Route("/", name: "home", methods: ["GET", "POST"])]
     public function home(): Response
     {

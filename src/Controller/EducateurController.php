@@ -11,18 +11,20 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+
 
 class EducateurController extends AbstractController
 {
+
     /**
-     * Affiche les différents éducateurs
+     * Redirection et affichages des valeurs 
      *
      * @param EducateurRepository $repository
      * @param PaginatorInterface $paginator
      * @param Request $request
      * @return Response
      */
-
     #[Route('/educateur', name: 'educateur', methods: ['GET'])]
     public function index(EducateurRepository $repository, PaginatorInterface $paginator, Request $request): Response
     {
@@ -37,7 +39,15 @@ class EducateurController extends AbstractController
         ]);
     }
 
+    /**
+     * Création d'un nouveau éducateur 
+     *
+     * @param EntityManagerInterface $manager
+     * @param Request $request
+     * @return Response
+     */
     #[Route('/newEducateur', name: 'newEducateur', methods: ['GET', 'POST'])]
+    #[Security('is_granted("ROLE_ADMIN")')]
     public function newEducateur(EntityManagerInterface $manager, Request $request): Response
     {
         $educateur = new Educateur();
@@ -58,7 +68,16 @@ class EducateurController extends AbstractController
         ]);
     }
 
+    /**
+     * Modification d'un éducateur
+     *
+     * @param Educateur $educateur
+     * @param EntityManagerInterface $manager
+     * @param Request $request
+     * @return Response
+     */
     #[Route('/updateEducateur/{id}', name: 'updateEducateur', methods: ['GET', 'POST'])]
+    #[Security('is_granted("ROLE_ADMIN")')]
     public function updateEducateur(Educateur $educateur, EntityManagerInterface $manager, Request $request): Response
     {
         $form = $this->createForm(EducateurType::class, $educateur);
@@ -78,7 +97,15 @@ class EducateurController extends AbstractController
         ]);
     }
 
+    /**
+     * Suppression d'un éducateur 
+     *
+     * @param EntityManagerInterface $manager
+     * @param Educateur $educateur
+     * @return Response
+     */
     #[Route('/deleteEducateur/{id}', name: 'deleteEducateur', methods: ['GET', 'POST'])]
+    #[Security('is_granted("ROLE_ADMIN")')]
     public function deleteEducateur(EntityManagerInterface $manager, Educateur $educateur): Response
     {
         $manager->remove($educateur);

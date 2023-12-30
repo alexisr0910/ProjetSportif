@@ -13,20 +13,17 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
-
 class ContactController extends AbstractController
 {
 
     /**
-     * Affiche les différents contact
-     * 
+     * Redirection et affichages des valeurs 
+     *
      * @param ContactRepository $repository
      * @param PaginatorInterface $paginator
      * @param Request $request
      * @return Response
      */
-
-
     #[Route('/contact', name: 'contact', methods: ['GET'])]
     public function index(ContactRepository $repository, PaginatorInterface $paginator, Request $request): Response
     {
@@ -38,14 +35,19 @@ class ContactController extends AbstractController
 
         return $this->render('Contact/contact.html.twig', [
             'contact' => $contact
-        ]
-
-        );
+        ]);
     }
+
+    /**
+     * Création d'un nouveau contact
+     *
+     * @param EntityManagerInterface $manager
+     * @param Request $request
+     * @return Response
+     */
     #[Route('/newContact', name: 'newContact', methods: ['GET', 'POST'])]
     #[Security('is_granted("ROLE_ADMIN")')]
-     public function newContact(EntityManagerInterface $manager,
-        Request $request): Response
+    public function newContact(EntityManagerInterface $manager, Request $request): Response
     {
         $contact = new Contact();
         $form = $this->createForm(ContactType::class, $contact);
@@ -56,7 +58,7 @@ class ContactController extends AbstractController
             $manager->persist($contact);
             $manager->flush();
 
-            $this->addFlash('success', 'Votre contact à bien été créer');
+            $this->addFlash('success', 'Votre contact a bien été créé');
             return $this->redirectToRoute('contact');
         }
 
@@ -64,12 +66,19 @@ class ContactController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+
+    /**
+     * Modification d'un contact
+     *
+     * @param Contact $contact
+     * @param EntityManagerInterface $manager
+     * @param Request $request
+     * @return Response
+     */
     #[Route('/updateContact/{id}', name: 'updateContact', methods: ['GET', 'POST'])]
-
-    public function updateContact(Contact $contact, EntityManagerInterface $manager,
-        Request $request): Response
+    #[Security('is_granted("ROLE_ADMIN")')]
+    public function updateContact(Contact $contact, EntityManagerInterface $manager, Request $request): Response
     {
-
         $form = $this->createForm(ContactType::class, $contact);
 
         $form->handleRequest($request);
@@ -78,18 +87,27 @@ class ContactController extends AbstractController
             $manager->persist($contact);
             $manager->flush();
 
-            $this->addFlash('success', 'Votre contact à bien été modifier');
+            $this->addFlash('success', 'Votre contact a bien été modifié');
             return $this->redirectToRoute('contact');
         }
 
         return $this->render('Contact/updateContact.html.twig', ['form' => $form->createView(),]);
     }
+
+    /**
+     * Suppression d'un contact
+     *
+     * @param EntityManagerInterface $manager
+     * @param Contact $contact
+     * @return Response
+     */
     #[Route('/deleteContact/{id}', name: 'deleteContact', methods: ['GET', 'POST'])]
+    #[Security('is_granted("ROLE_ADMIN")')]
     public function deleteContact(EntityManagerInterface $manager, Contact $contact): Response
     {
         $manager->remove($contact);
         $manager->flush();
-        $this->addFlash('success', 'Votre contact à bien été supprimer');
+        $this->addFlash('success', 'Votre contact a bien été supprimé');
         return $this->redirectToRoute('contact');
     }
 }

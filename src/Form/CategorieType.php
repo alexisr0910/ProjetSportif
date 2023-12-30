@@ -10,9 +10,15 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
 
-
 class CategorieType extends AbstractType
 {
+    /**
+     * Construction du formulaire de categorie
+     *
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     * @return void
+     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -27,7 +33,7 @@ class CategorieType extends AbstractType
                     'class' => 'form-label mt-4'
                 ],
                 'constraints' => [
-                    new Assert\Length(['min' => 2, 'max' => 200, 'minMessage' => 'La catégorie doit faire 2 caractères minimum ', 'maxMessage' => 'La catégorie dois faire 200 caractères maximum ']),
+                    new Assert\Length(['min' => 2, 'max' => 200, 'minMessage' => 'La catégorie doit faire 2 caractères minimum ', 'maxMessage' => 'La catégorie doit faire 200 caractères maximum']),
                     new Assert\NotBlank()
                 ]
             ])
@@ -42,7 +48,7 @@ class CategorieType extends AbstractType
                     'class' => 'form-label mt-4'
                 ],
                 'constraints' => [
-                    new Assert\Length(['min' => 2, 'max' => 200, 'minMessage' => 'La catégorie doit faire 2 caractères minimum ', 'maxMessage' => 'La catégorie dois faire 200 caractères maximum ']),
+                    new Assert\Length(['min' => 2, 'max' => 20, 'minMessage' => 'Le code raccourci doit faire 2 caractères minimum ', 'maxMessage' => 'Le code raccourci doit faire 20 caractères maximum']),
                     new Assert\NotBlank()
                 ]
             ])
@@ -51,10 +57,15 @@ class CategorieType extends AbstractType
                     'class' => 'btn btn-primary mt-4'
                 ],
                 'label' => 'Ajouter'
-            ])
-        ;
+            ]);
     }
 
+    /**
+     * Configure les options spécifiques du formulaire
+     *
+     * @param OptionsResolver $resolver
+     * @return void
+     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

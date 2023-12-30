@@ -1,9 +1,8 @@
 <?php
 
 namespace App\Controller;
+
 use App\Entity\Licencie;
-use App\Entity\Educateur;
-use App\Entity\Contact;
 use App\Form\LicencieType;
 use App\Repository\LicencieRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -12,18 +11,19 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+
 
 class LicencieController extends AbstractController
 {
     /**
-     * Affiche les différents licenciés
+     * Redirection et affichages des valeurs 
      *
      * @param LicencieRepository $repository
      * @param PaginatorInterface $paginator
      * @param Request $request
      * @return Response
      */
-
     #[Route('/licencie', name: 'licencie', methods: ['GET'])]
     public function index(LicencieRepository $repository, PaginatorInterface $paginator, Request $request): Response
     {
@@ -37,13 +37,19 @@ class LicencieController extends AbstractController
             'licencie' => $licencie
         ]);
     }
-
+    /**
+     * Création d'un nouveau licencié
+     *
+     * @param EntityManagerInterface $manager
+     * @param Request $request
+     * @return Response
+     */
     #[Route('/newLicencie', name: 'newLicencie', methods: ['GET', 'POST'])]
+    #[Security('is_granted("ROLE_ADMIN")')]
     public function newLicencie(EntityManagerInterface $manager, Request $request): Response
     {
         $licencie = new Licencie();
         $licencie->setNumLicence(mt_rand(1000, 9999));
-
 
         $form = $this->createForm(LicencieType::class, $licencie);
 
@@ -62,7 +68,16 @@ class LicencieController extends AbstractController
         ]);
     }
 
+    /**
+     * Modification d'un licencié
+     *
+     * @param Licencie $licencie
+     * @param EntityManagerInterface $manager
+     * @param Request $request
+     * @return Response
+     */
     #[Route('/updateLicencie/{id}', name: 'updateLicencie', methods: ['GET', 'POST'])]
+    #[Security('is_granted("ROLE_ADMIN")')]
     public function updateLicencie(Licencie $licencie, EntityManagerInterface $manager, Request $request): Response
     {
         $form = $this->createForm(LicencieType::class, $licencie);
@@ -82,7 +97,15 @@ class LicencieController extends AbstractController
         ]);
     }
 
+    /**
+     * Suppression d'un licencié
+     *
+     * @param EntityManagerInterface $manager
+     * @param Licencie $licencie
+     * @return Response
+     */
     #[Route('/deleteLicencie/{id}', name: 'deleteLicencie', methods: ['GET', 'POST'])]
+    #[Security('is_granted("ROLE_ADMIN")')]
     public function deleteLicencie(EntityManagerInterface $manager, Licencie $licencie): Response
     {
         $manager->remove($licencie);

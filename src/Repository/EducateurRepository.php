@@ -21,7 +21,7 @@ class EducateurRepository extends ServiceEntityRepository
         parent::__construct($registry, Educateur::class);
     }
 
-//    /**
+    //    /**
 //     * @return Educateur[] Returns an array of Educateur objects
 //     */
 //    public function findByExampleField($value): array
@@ -36,7 +36,7 @@ class EducateurRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Educateur
+    //    public function findOneBySomeField($value): ?Educateur
 //    {
 //        return $this->createQueryBuilder('e')
 //            ->andWhere('e.exampleField = :val')

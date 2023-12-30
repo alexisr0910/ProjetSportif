@@ -21,7 +21,7 @@ class ContactRepository extends ServiceEntityRepository
         parent::__construct($registry, Contact::class);
     }
 
-//    /**
+    //    /**
 //     * @return Contact[] Returns an array of Contact objects
 //     */
 //    public function findByExampleField($value): array
@@ -36,7 +36,7 @@ class ContactRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Contact
+    //    public function findOneBySomeField($value): ?Contact
 //    {
 //        return $this->createQueryBuilder('c')
 //            ->andWhere('c.exampleField = :val')

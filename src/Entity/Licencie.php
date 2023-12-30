@@ -7,11 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
-
-
 #[ORM\Entity(repositoryClass: LicencieRepository::class)]
 #[UniqueEntity('numLicence')]
-
 class Licencie
 {
     #[ORM\Id]
@@ -21,27 +18,25 @@ class Licencie
 
     #[ORM\Column(length: 255, nullable: true)]
     #[Assert\NotBlank()]
-
     private ?string $nom = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     #[Assert\NotBlank()]
-
     private ?string $prenom = null;
 
     #[ORM\Column(nullable: true)]
     private ?int $numLicence = null;
 
     #[ORM\OneToOne(mappedBy: 'contact', cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable:true, onDelete:'SET NULL')]
+    #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
     private ?Contact $contact = null;
 
     #[ORM\OneToOne(mappedBy: 'educateur', cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable:true, onDelete:'SET NULL')]
+    #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
     private ?Educateur $educateur = null;
 
     #[ORM\ManyToOne(inversedBy: 'categorie')]
-    #[ORM\JoinColumn(nullable:true, onDelete:'SET NULL')]
+    #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
     private ?Categorie $categorie = null;
 
     public function getId(): ?int
@@ -92,17 +87,15 @@ class Licencie
 
     public function setContact(?Contact $contact): static
     {
-        // unset the owning side of the relation if necessary
-        if ($contact === null && $this->contact!== null) {
+        if ($contact === null && $this->contact !== null) {
             $this->contact->setContact(null);
         }
 
-        // set the owning side of the relation if necessary
-        if ($contact!== null && $contact->getContact() !== $this) {
+        if ($contact !== null && $contact->getContact() !== $this) {
             $contact->setContact($this);
         }
 
-        $this->contact= $contact;
+        $this->contact = $contact;
 
         return $this;
     }
@@ -114,17 +107,15 @@ class Licencie
 
     public function setEducateur(?Educateur $educateur): static
     {
-        // unset the owning side of the relation if necessary
-        if ($educateur === null && $this->educateur!== null) {
+        if ($educateur === null && $this->educateur !== null) {
             $this->educateur->setEducateur(null);
         }
 
-        // set the owning side of the relation if necessary
-        if ($educateur!== null && $educateur->getEducateur() !== $this) {
+        if ($educateur !== null && $educateur->getEducateur() !== $this) {
             $educateur->setEducateur($this);
         }
 
-        $this->educateur= $educateur;
+        $this->educateur = $educateur;
 
         return $this;
     }
@@ -136,7 +127,7 @@ class Licencie
 
     public function setCategorie(?Categorie $categorie): static
     {
-        $this->categorie= $categorie;
+        $this->categorie = $categorie;
 
         return $this;
     }

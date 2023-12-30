@@ -7,10 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
-
-
 #[ORM\Entity(repositoryClass: EducateurRepository::class)]
-
 #[UniqueEntity('email')]
 class Educateur
 {
@@ -20,24 +17,22 @@ class Educateur
     private ?int $id = null;
 
     #[ORM\OneToOne(inversedBy: 'educateur', cascade: ['persist', 'remove'])]
-    private ?licencie $educateur = null;
+    private ?Licencie $educateur = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     #[Assert\NotBlank()]
-
     private ?string $email = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     #[Assert\NotBlank()]
-
     private ?string $mdp = null;
 
-    public function getEducateur(): ?licencie
+    public function getEducateur(): ?Licencie
     {
         return $this->educateur;
     }
 
-    public function setEducateur(?licencie $educateur): static
+    public function setEducateur(?Licencie $educateur): static
     {
         $this->educateur = $educateur;
 

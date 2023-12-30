@@ -21,7 +21,7 @@ class CategorieRepository extends ServiceEntityRepository
         parent::__construct($registry, Categorie::class);
     }
 
-//    /**
+    //    /**
 //     * @return Categorie[] Returns an array of Categorie objects
 //     */
 //    public function findByExampleField($value): array
@@ -36,7 +36,7 @@ class CategorieRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Categorie
+    //    public function findOneBySomeField($value): ?Categorie
 //    {
 //        return $this->createQueryBuilder('c')
 //            ->andWhere('c.exampleField = :val')

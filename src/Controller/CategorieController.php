@@ -11,20 +11,20 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+
 
 class CategorieController extends AbstractController
 {
 
     /**
-     * Affiche les différentes catégories
-     * 
+     * Redirection et affichages des valeurs 
+     *
      * @param CategorieRepository $repository
      * @param PaginatorInterface $paginator
      * @param Request $request
      * @return Response
      */
-
-
     #[Route('/categorie', name: 'categorie', methods: ['GET'])]
     public function index(CategorieRepository $repository, PaginatorInterface $paginator, Request $request): Response
     {
@@ -36,14 +36,18 @@ class CategorieController extends AbstractController
 
         return $this->render('Categorie/categorie.html.twig', [
             'categorie' => $categorie
-        ]
-
-        );
+        ]);
     }
-
+    /**
+     * Création d'une catégorie 
+     *
+     * @param EntityManagerInterface $manager
+     * @param Request $request
+     * @return Response
+     */
     #[Route('/newCategorie', name: 'newCategorie', methods: ['GET', 'POST'])]
-    public function newCategorie(EntityManagerInterface $manager,
-        Request $request): Response
+    #[Security('is_granted("ROLE_ADMIN")')]
+    public function newCategorie(EntityManagerInterface $manager, Request $request): Response
     {
         $categorie = new Categorie();
         $form = $this->createForm(CategorieType::class, $categorie);
@@ -54,7 +58,7 @@ class CategorieController extends AbstractController
             $manager->persist($categorie);
             $manager->flush();
 
-            $this->addFlash('success', 'Votre catégorie à bien été créer');
+            $this->addFlash('success', 'Votre catégorie a bien été créée');
             return $this->redirectToRoute('categorie');
         }
 
@@ -62,12 +66,18 @@ class CategorieController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+    /**
+     * Modification d'une catégorie
+     *
+     * @param Categorie $categorie
+     * @param EntityManagerInterface $manager
+     * @param Request $request
+     * @return Response
+     */
     #[Route('/updateCategorie/{id}', name: 'updateCategorie', methods: ['GET', 'POST'])]
-
-    public function updateCategorie(Categorie $categorie, EntityManagerInterface $manager,
-        Request $request): Response
+    #[Security('is_granted("ROLE_ADMIN")')]
+    public function updateCategorie(Categorie $categorie, EntityManagerInterface $manager, Request $request): Response
     {
-
         $form = $this->createForm(CategorieType::class, $categorie);
 
         $form->handleRequest($request);
@@ -76,22 +86,27 @@ class CategorieController extends AbstractController
             $manager->persist($categorie);
             $manager->flush();
 
-            $this->addFlash('success', 'Votre catégorie à bien été modifier');
+            $this->addFlash('success', 'Votre catégorie a bien été modifiée');
             return $this->redirectToRoute('categorie');
         }
 
         return $this->render('Categorie/updateCategorie.html.twig', ['form' => $form->createView(),]);
     }
+    
+    /**
+     * Suppresion d'une catégorie 
+     *
+     * @param EntityManagerInterface $manager
+     * @param Categorie $categorie
+     * @return Response
+     */
     #[Route('/deleteCategorie/{id}', name: 'deleteCategorie', methods: ['GET', 'POST'])]
+    #[Security('is_granted("ROLE_ADMIN")')]
     public function deleteCategorie(EntityManagerInterface $manager, Categorie $categorie): Response
     {
         $manager->remove($categorie);
         $manager->flush();
-        $this->addFlash('success', 'Votre categorie à bien été supprimer');
+        $this->addFlash('success', 'Votre categorie a bien été supprimée');
         return $this->redirectToRoute('categorie');
     }
 }
-
-
-
-

@@ -13,6 +13,14 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class EducateurType extends AbstractType
 {
+
+    /**
+     * Construction du formulaire 
+     *
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     * @return void
+     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -27,7 +35,7 @@ class EducateurType extends AbstractType
                 ],
                 'constraints' => [
                     new Assert\Email(['message' => 'Veuillez entrer une adresse email valide.']),
-                    new Assert\NotBlank()
+                    new Assert\NotBlank(['message' => 'L\'email ne peut pas être vide.'])
                 ]
             ])
             ->add('mdp', PasswordType::class, [
@@ -48,7 +56,6 @@ class EducateurType extends AbstractType
                     new Assert\Regex([
                         'pattern' => '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/',
                         'message' => 'Le mot de passe doit contenir au moins une lettre minuscule, une lettre majuscule et un chiffre.'
-
                     ]),
                 ]
             ])
@@ -61,6 +68,12 @@ class EducateurType extends AbstractType
         ;
     }
 
+    /**
+     * Configure les options spécifiques du formulaire
+     *
+     * @param OptionsResolver $resolver
+     * @return void
+     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

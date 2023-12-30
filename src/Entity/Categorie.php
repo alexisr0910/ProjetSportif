@@ -9,8 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
-
-
 #[ORM\Entity(repositoryClass: CategorieRepository::class)]
 #[UniqueEntity('nomCategorie')]
 class Categorie
@@ -20,7 +18,7 @@ class Categorie
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: licencie::class)]
+    #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: Licencie::class)]
     private Collection $categorie;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -29,12 +27,11 @@ class Categorie
 
     #[ORM\Column(length: 255, nullable: true)]
     #[Assert\NotBlank()]
-
     private ?string $codeRaccourcie = null;
 
     public function __construct()
     {
-        $this->categorie_id = new ArrayCollection();
+        $this->categorie = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -43,14 +40,14 @@ class Categorie
     }
 
     /**
-     * @return Collection<int, licencie>
+     * @return Collection<int, Licencie>
      */
     public function getCategorie(): Collection
     {
         return $this->categorie;
     }
 
-    public function addCategorie(licencie $categorie): static
+    public function addCategorie(Licencie $categorie): static
     {
         if (!$this->categorie->contains($categorie)) {
             $this->categorie->add($categorie);
@@ -60,7 +57,7 @@ class Categorie
         return $this;
     }
 
-    public function removeCategorie(licencie $categorie): static
+    public function removeCategorie(Licencie $categorie): static
     {
         if ($this->categorie->removeElement($categorie)) {
             // set the owning side to null (unless already changed)
@@ -95,6 +92,7 @@ class Categorie
 
         return $this;
     }
+
     public function __toString()
     {
         return $this->nomCategorie;

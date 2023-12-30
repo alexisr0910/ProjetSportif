@@ -21,7 +21,7 @@ class LicencieRepository extends ServiceEntityRepository
         parent::__construct($registry, Licencie::class);
     }
 
-//    /**
+    //    /**
 //     * @return Licencie[] Returns an array of Licencie objects
 //     */
 //    public function findByExampleField($value): array
@@ -36,7 +36,7 @@ class LicencieRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Licencie
+    //    public function findOneBySomeField($value): ?Licencie
 //    {
 //        return $this->createQueryBuilder('l')
 //            ->andWhere('l.exampleField = :val')

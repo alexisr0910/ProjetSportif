@@ -7,10 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
-
 #[ORM\Entity(repositoryClass: ContactRepository::class)]
 #[UniqueEntity('numeroTel')]
-
 class Contact
 {
     #[ORM\Id]
@@ -19,26 +17,22 @@ class Contact
     private ?int $id = null;
 
     #[ORM\OneToOne(inversedBy: 'contact', cascade: ['persist', 'remove'])]
-    private ?licencie $contact = null;
+    private ?Licencie $contact = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     #[Assert\NotBlank()]
-
     private ?string $nom = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     #[Assert\NotBlank()]
-
     private ?string $prenom = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     #[Assert\NotBlank()]
-
     private ?string $email = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     #[Assert\NotBlank()]
-
     private ?string $numeroTel = null;
 
     public function getId(): ?int
@@ -46,12 +40,12 @@ class Contact
         return $this->id;
     }
 
-    public function getContact(): ?licencie
+    public function getContact(): ?Licencie
     {
         return $this->contact;
     }
 
-    public function setContact(?licencie $contact): static
+    public function setContact(?Licencie $contact): static
     {
         $this->contact = $contact;
 
