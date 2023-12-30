@@ -7,6 +7,7 @@ use App\Entity\Contact;
 use App\Entity\Educateur;
 use App\Entity\Licence;
 use App\Entity\Licencie;
+use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Generator;
@@ -57,12 +58,36 @@ class AppFixtures extends Fixture
                 ->setNom($this->faker->word())
                 ->setPrenom($this->faker->word())
                 ->setNumLicence(mt_rand(0, 9999));
-                
-                
+
+
 
             $manager->persist($licencie);
 
         }
+ 
+
+        $user1 = new User();
+        $user1
+            ->setEmail('alexis@hotmail.com')
+            ->setRoles(['ROLE_ADMIN'])
+            ->setPassword('azerty1');
+        $manager->persist($user1);
+
+        $user2 = new User();
+        $user2
+            ->setEmail('lisa@hotmail.com')
+            ->setRoles(['ROLE_ADMIN'])
+            ->setPassword('azerty12');
+        $manager->persist($user2);
+
+        $user3 = new User();
+        $user3
+            ->setEmail('christian@hotmail.com')
+            ->setRoles(['ROLE_USER'])
+            ->setPassword('azerty123');
+        $manager->persist($user3);
+
+        $manager->flush();
 
         $manager->flush();
 

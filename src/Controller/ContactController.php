@@ -11,6 +11,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+
 
 class ContactController extends AbstractController
 {
@@ -41,7 +43,8 @@ class ContactController extends AbstractController
         );
     }
     #[Route('/newContact', name: 'newContact', methods: ['GET', 'POST'])]
-    public function newContact(EntityManagerInterface $manager,
+    #[Security('is_granted("ROLE_ADMIN")')]
+     public function newContact(EntityManagerInterface $manager,
         Request $request): Response
     {
         $contact = new Contact();
