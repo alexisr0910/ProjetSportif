@@ -29,7 +29,6 @@ class RegistrationController extends AbstractController
      * @return Response
      */
     #[Route('/register', name: 'app_register')]
-    #[Security('is_granted("ROLE_ADMIN")')]
     public function register(
         Request $request,
         UserPasswordHasherInterface $userPasswordHasher,
@@ -58,7 +57,7 @@ class RegistrationController extends AbstractController
             );
         }
 
-        return $this->render('registration/register.html.twig', [
+        return $this->render('pages/home.html.twig', [
             'registrationForm' => $form->createView(),
         ]);
     }
