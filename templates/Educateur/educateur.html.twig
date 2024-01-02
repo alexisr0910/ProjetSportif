@@ -42,7 +42,7 @@
           {% for educateur in educateur %}
             <tr>
               <th scope="row">{{ educateur.email }}</th>
-              <td>{{ educateur.mdp }}</td>
+              <td>{{ educateur.password }}</td>
               <td><a href="{{ path('updateEducateur', {id: educateur.id}) }}" class="btn btn-secondary">Modifier</a></td>
               <td><a href="{{ path('deleteEducateur', {id: educateur.id}) }}" class="btn btn-danger">Supprimer</a></td>
 

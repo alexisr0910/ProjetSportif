@@ -47,7 +47,6 @@ class EducateurController extends AbstractController
      * @return Response
      */
     #[Route('/newEducateur', name: 'newEducateur', methods: ['GET', 'POST'])]
-    #[Security('is_granted("ROLE_ADMIN")')]
     public function newEducateur(EntityManagerInterface $manager, Request $request): Response
     {
         $educateur = new Educateur();

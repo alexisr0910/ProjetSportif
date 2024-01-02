@@ -2,15 +2,19 @@
 
 namespace App\Form;
 
-use App\Entity\Educateur;
+use App\Entity\Licencie;
+use Doctrine\DBAL\Types\JsonType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
-
 class EducateurType extends AbstractType
 {
 
@@ -24,41 +28,52 @@ class EducateurType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('email', EmailType::class, [
-                'attr' => [
-                    'class' => 'form-control',
-                    'maxlength' => '255'
-                ],
-                'label' => 'Email',
-                'label_attr' => [
-                    'class' => 'form-label mt-4'
-                ],
-                'constraints' => [
-                    new Assert\Email(['message' => 'Veuillez entrer une adresse email valide.']),
-                    new Assert\NotBlank(['message' => 'L\'email ne peut pas être vide.'])
-                ]
-            ])
-            ->add('mdp', PasswordType::class, [
-                'attr' => [
-                    'class' => 'form-control',
-                    'minlength' => '4',
-                ],
-                'label' => 'Mot de passe',
-                'label_attr' => [
-                    'class' => 'form-label mt-4'
-                ],
-                'constraints' => [
-                    new Assert\NotBlank(['message' => 'Le mot de passe ne peut pas être vide.']),
-                    new Assert\Length([
-                        'min' => 6,
-                        'minMessage' => 'Le mot de passe doit faire au moins {{ limit }} caractères.',
-                    ]),
-                    new Assert\Regex([
-                        'pattern' => '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/',
-                        'message' => 'Le mot de passe doit contenir au moins une lettre minuscule, une lettre majuscule et un chiffre.'
-                    ]),
-                ]
-            ])
+        ->add('email',EmailType::class,[
+            'label' => 'Email',
+            'label_attr' => [
+                'class' => 'form-label mt-2'
+            ],
+            'attr' => [
+                'class' => 'form-control',
+                'minlength' => 3,
+                'maxlength' => 50,
+                'placeholder' => 'Entrez votre email'
+            ],
+            'constraints' => [
+                new Assert\Length([
+                    'min' => 3,
+                    'max' => 50,
+                    'minMessage' => 'L\'email doit contenir au moins {{ limit }} caractères',
+                    'maxMessage' => 'L\'email doit contenir au maximum {{ limit }} caractères'
+                ]),
+                new Assert\NotBlank([
+                    'message' => 'L\'email est obligatoire'
+                ])
+            ]
+        ])
+        ->add('password',TextType::class,[
+            'label' => 'Mot de passe',
+            'label_attr' => [
+                'class' => 'form-label mt-2'
+            ],
+            'attr' => [
+                'class' => 'form-control',
+                'minlength' => 3,
+                'maxlength' => 50,
+                'placeholder' => 'Entrez votre mot de passe'
+            ],
+            'constraints' => [
+                new Assert\Length([
+                    'min' => 3,
+                    'max' => 50,
+                    'minMessage' => 'Le mot de passe doit contenir au moins {{ limit }} caractères',
+                    'maxMessage' => 'Le mot de passe doit contenir au maximum {{ limit }} caractères'
+                ]),
+                new Assert\NotBlank([
+                    'message' => 'Le mot de passe est obligatoire'
+                ])
+            ]
+        ])
             ->add('submit', SubmitType::class, [
                 'attr' => [
                     'class' => 'btn btn-primary mt-4'
