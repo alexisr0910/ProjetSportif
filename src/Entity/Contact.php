@@ -16,7 +16,8 @@ class Contact
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\OneToOne(inversedBy: 'contact', cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne(inversedBy: 'contacts')]
+    #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
     private ?Licencie $contact = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -51,7 +52,6 @@ class Contact
 
         return $this;
     }
-
     public function getNom(): ?string
     {
         return $this->nom;

@@ -45,7 +45,6 @@ class AppFixtures extends Fixture
             $manager->persist($categorie);
             $licencie = new Licencie();
             $licencie
-                ->setContact($contact)
                 ->setCategorie($categorie)
                 ->setEducateur($educateur)
                 ->setNom('NomLicencie ' . $this->faker->word())

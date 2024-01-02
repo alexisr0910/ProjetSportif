@@ -78,7 +78,10 @@ class ContactType extends AbstractType
                     'class' => 'form-label mt-4'
                 ],
                 'constraints' => [
-                    new Assert\Regex(['pattern' => '/^\+?\d{0,15}$/', 'message' => 'Veuillez entrer un numéro de téléphone valide.']),
+                    new Assert\Regex([
+                        'pattern' => '/^(\+?\d{1,4}[-.\s]?)?(\()?(\d{1,5})(?(2)\))[-.\s]?(\d{1,5})[-.\s]?(\d{1,9})$/',
+                        'message' => 'Veuillez entrer un numéro de téléphone valide.'
+                    ]),
                     new Assert\NotBlank()
                 ]
             ])

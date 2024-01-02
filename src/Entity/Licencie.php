@@ -3,9 +3,11 @@
 namespace App\Entity;
 
 use App\Repository\LicencieRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\Collection;
 
 #[ORM\Entity(repositoryClass: LicencieRepository::class)]
 #[UniqueEntity('numLicence')]
@@ -27,9 +29,8 @@ class Licencie
     #[ORM\Column(nullable: true)]
     private ?int $numLicence = null;
 
-    #[ORM\OneToOne(mappedBy: 'contact', cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
-    private ?Contact $contact = null;
+    #[ORM\OneToMany(mappedBy: 'contact', targetEntity: Contact::class, cascade: ['persist', 'remove'])]
+    private Collection $contacts;
 
     #[ORM\OneToOne(mappedBy: 'educateur', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
@@ -38,6 +39,12 @@ class Licencie
     #[ORM\ManyToOne(inversedBy: 'categorie')]
     #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
     private ?Categorie $categorie = null;
+
+
+    public function __construct()
+    {
+        $this->contact = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -80,23 +87,30 @@ class Licencie
         return $this;
     }
 
-    public function getContact(): ?Contact
+    public function getContacts(): Collection
     {
-        return $this->contact;
+        return $this->contacts;
     }
-
-    public function setContact(?Contact $contact): static
+    
+    public function addContact(Contact $contact): static
     {
-        if ($contact === null && $this->contact !== null) {
-            $this->contact->setContact(null);
-        }
-
-        if ($contact !== null && $contact->getContact() !== $this) {
+        if (!$this->contacts->contains($contact)) {
+            $this->contacts->add($contact);
             $contact->setContact($this);
         }
-
-        $this->contact = $contact;
-
+    
+        return $this;
+    }
+    
+    public function removeContact(Contact $contact): static
+    {
+        if ($this->contacts->removeElement($contact)) {
+            // set the owning side to null (unless already changed)
+            if ($contact->getContact() === $this) {
+                $contact->setContact(null);
+            }
+        }
+    
         return $this;
     }
 

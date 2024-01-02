@@ -31,7 +31,7 @@ class EducateurController extends AbstractController
         $educateur = $paginator->paginate(
             $repository->findAll(),
             $request->query->getInt('page', 1),
-            10
+            5
         );
 
         return $this->render('Educateur/educateur.html.twig', [
@@ -47,9 +47,11 @@ class EducateurController extends AbstractController
      * @return Response
      */
     #[Route('/newEducateur', name: 'newEducateur', methods: ['GET', 'POST'])]
+    #[Security('is_granted("ROLE_ADMIN")')]
     public function newEducateur(EntityManagerInterface $manager, Request $request): Response
     {
         $educateur = new Educateur();
+        $educateur->setRoles(['ROLE_EDUCATEUR']);
         $form = $this->createForm(EducateurType::class, $educateur);
 
         $form->handleRequest($request);

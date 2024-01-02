@@ -8,11 +8,11 @@
 
 {% block body %}
   <div class="container mt-4">
-    <h1 class="display-4">Licencié</h1>
+    <h1 class="display-4">Licenciés</h1>
     <hr class="my-4" />
 
     <a href="{{ path('newLicencie') }}" class="btn btn-primary">
-      Créer un licencie
+      Créer un licencié
     </a>
 
     <hr class="my-4" />
@@ -25,13 +25,16 @@
 
     {% if licencie|length > 0 %}
       <div class="count mt-3">
-        <h5>Il y a {{ licencie.getTotalItemCount }} licenciés au total</h5>
+        <h5>Nombre de licenciés :{{ licencie.getTotalItemCount }}</h5>
       </div>
 
       <table class="table table-hover">
         <thead>
           <tr>
-            <th scope="col">Numéroe de Licencie</th>
+            <th scope="col">Numéro de Licencié
+          
+          
+          </th>
             <th scope="col">Nom</th>
             <th scope="col">Prénom</th>
             <th scope="col">Catégorie</th>

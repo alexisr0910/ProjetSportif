@@ -30,7 +30,7 @@ class LicencieController extends AbstractController
         $licencie = $paginator->paginate(
             $repository->findAll(),
             $request->query->getInt('page', 1),
-            10
+            5
         );
 
         return $this->render('Licencie/licencie.html.twig', [
