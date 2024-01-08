@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Entity;
-
 use App\Repository\LicencieRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -30,7 +29,8 @@ class Licencie
     private ?int $numLicence = null;
 
     #[ORM\OneToMany(mappedBy: 'contact', targetEntity: Contact::class, cascade: ['persist', 'remove'])]
-    private Collection $contacts;
+    private Collection $contact;
+
 
     #[ORM\OneToOne(mappedBy: 'educateur', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
@@ -87,32 +87,37 @@ class Licencie
         return $this;
     }
 
-    public function getContacts(): Collection
+   
+    /**
+     * @return Collection|Contact[]
+     */
+    public function getContact(): Collection
     {
-        return $this->contacts;
+        return $this->contact;
     }
-    
-    public function addContact(Contact $contact): static
+
+    public function addContact(Contact $contact): self
     {
-        if (!$this->contacts->contains($contact)) {
-            $this->contacts->add($contact);
-            $contact->setContact($this);
+        if (!$this->contact->contains($contact)) {
+            $this->contact[] = $contact;
+            $contact->setLicencie($this);
         }
-    
+
         return $this;
     }
-    
-    public function removeContact(Contact $contact): static
+
+    public function removeContact(Contact $contact): self
     {
-        if ($this->contacts->removeElement($contact)) {
+        if ($this->contact->removeElement($contact)) {
             // set the owning side to null (unless already changed)
-            if ($contact->getContact() === $this) {
-                $contact->setContact(null);
+            if ($contact->getLicencie() === $this) {
+                $contact->setLicencie(null);
             }
         }
-    
+
         return $this;
     }
+
 
     public function getEducateur(): ?Educateur
     {

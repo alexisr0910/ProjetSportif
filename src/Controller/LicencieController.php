@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Licencie;
 use App\Form\LicencieType;
+use App\Repository\CategorieRepository;
+use App\Repository\ContactRepository;
 use App\Repository\LicencieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -12,6 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+
 
 
 class LicencieController extends AbstractController
@@ -113,4 +116,34 @@ class LicencieController extends AbstractController
         $this->addFlash('success', 'Votre licencié a bien été supprimé');
         return $this->redirectToRoute('licencie');
     }
+
+
+    #[Route('/licenciesParCategorie', name: 'licenciesParCategorie')]
+    public function licenciesParCategorie(Request $request, CategorieRepository $categorieRepository): Response
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        $categories = $categorieRepository->findAll();
+        $categoryId = $request->query->get('category');
+        $selectedCategory = null;
+        $licencies = [];
+
+        if ($categoryId) {
+            $selectedCategory = $categorieRepository->find($categoryId);
+            if ($selectedCategory) {
+                $licencies = $selectedCategory->getLicencies();
+            }
+        }
+
+        return $this->render('Frontend/licenciesParCategorie.html.twig', [
+            'controller_name' => 'LicencieController',
+            'categories' => $categories,
+            'licencies' => $licencies,
+            'selectedCategory' => $selectedCategory ?? null,
+        ]);
+    }
+   
+
+
+
 }

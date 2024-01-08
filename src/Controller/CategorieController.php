@@ -4,10 +4,13 @@ namespace App\Controller;
 
 use App\Entity\Categorie;
 use App\Form\CategorieType;
+use App\Model\SearchData;
 use App\Repository\CategorieRepository;
+use App\Repository\LicencieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\SearchType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -92,7 +95,7 @@ class CategorieController extends AbstractController
 
         return $this->render('Categorie/updateCategorie.html.twig', ['form' => $form->createView(),]);
     }
-    
+
     /**
      * Suppresion d'une catégorie 
      *
@@ -109,4 +112,7 @@ class CategorieController extends AbstractController
         $this->addFlash('success', 'Votre categorie a bien été supprimée');
         return $this->redirectToRoute('categorie');
     }
+
+   
+
 }

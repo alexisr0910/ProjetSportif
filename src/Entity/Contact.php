@@ -8,27 +8,34 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ContactRepository::class)]
-#[UniqueEntity('numeroTel')]
+#[UniqueEntity("numeroTel")]
+
 class Contact
 {
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'contacts')]
+
+    #[ORM\ManyToOne(inversedBy: "contact")]
     #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
-    private ?Licencie $contact = null;
+
+    private ?Licencie $licencie = null;
+
 
     #[ORM\Column(length: 255, nullable: true)]
     #[Assert\NotBlank()]
+
     private ?string $nom = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(type: "string", length: 255, nullable: true)]
     #[Assert\NotBlank()]
     private ?string $prenom = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(type: "string", length: 255, nullable: true)]
     #[Assert\NotBlank()]
     private ?string $email = null;
 
@@ -41,23 +48,14 @@ class Contact
         return $this->id;
     }
 
-    public function getContact(): ?Licencie
-    {
-        return $this->contact;
-    }
+    
 
-    public function setContact(?Licencie $contact): static
-    {
-        $this->contact = $contact;
-
-        return $this;
-    }
     public function getNom(): ?string
     {
         return $this->nom;
     }
 
-    public function setNom(?string $nom): static
+    public function setNom(?string $nom): self
     {
         $this->nom = $nom;
 
@@ -69,7 +67,7 @@ class Contact
         return $this->prenom;
     }
 
-    public function setPrenom(?string $prenom): static
+    public function setPrenom(?string $prenom): self
     {
         $this->prenom = $prenom;
 
@@ -81,7 +79,7 @@ class Contact
         return $this->email;
     }
 
-    public function setEmail(?string $email): static
+    public function setEmail(?string $email): self
     {
         $this->email = $email;
 
@@ -93,9 +91,22 @@ class Contact
         return $this->numeroTel;
     }
 
-    public function setNumeroTel(?string $numeroTel): static
+    public function setNumeroTel(?string $numeroTel): self
     {
         $this->numeroTel = $numeroTel;
+
+        return $this;
+    }
+
+    // Ajout des méthodes getLicencie et setLicencie
+    public function getLicencie(): ?Licencie
+    {
+        return $this->licencie;
+    }
+
+    public function setLicencie(?Licencie $licencie): self
+    {
+        $this->licencie = $licencie;
 
         return $this;
     }

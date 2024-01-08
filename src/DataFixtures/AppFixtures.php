@@ -25,18 +25,12 @@ class AppFixtures extends Fixture
 
             $educateur = new Educateur();
             $educateur
-                ->setEmail('email@email.email ' . $i)
+                ->setEmail('email@email.email' . $i)
                 ->setPassword('motdepasse' . $i)
                 ->setRoles($this->faker->randomElement([['ROLE_ADMIN'], ['ROLE_EDUCATEUR']]));
+
             $manager->persist($educateur);
 
-            $contact = new Contact();
-            $contact
-                ->setNom('nomContact  ' . $this->faker->word())
-                ->setPrenom('prenomContact  ' . $this->faker->word())
-                ->setEmail('emailContact  ' . $i)
-                ->setNumeroTel($this->faker->randomNumber(4, true));
-            $manager->persist($contact);
 
             $categorie = new Categorie();
             $categorie
@@ -52,6 +46,17 @@ class AppFixtures extends Fixture
                 ->setNumLicence(mt_rand(0, 9999));
 
             $manager->persist($licencie);
+
+            $contact = new Contact();
+            $contact
+                ->setLicencie($licencie)
+
+                ->setNom('nomContact  ' . $this->faker->word())
+                ->setPrenom('prenomContact  ' . $this->faker->word())
+                ->setEmail('emailContact  ' . $i)
+                ->setNumeroTel($this->faker->randomNumber(4, true));
+            $manager->persist($contact);
+
         }
 
         /*   $user1 = new User();

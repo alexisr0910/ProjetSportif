@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Licenciés par Catégorie
+{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Licenciés par Catégorie</h1>
+
+        <div class="d-flex justify-content-center mb-4">
+            <form method="get" action="{{ path('licenciesParCategorie') }}" class="form-inline">
+                <label for="category" class="mr-2">Sélectionnez une catégorie :</label>
+                <select name="category" id="category" class="form-control mr-2">
+                    <option value="" {% if not selectedCategory %}selected{% endif %}>Toutes les catégories</option>
+                    {% for category in categories %}
+                        <option value="{{ category.id }}" {% if selectedCategory and selectedCategory.id == category.id %}selected{% endif %}>
+                            {{ category.nomCategorie }}
+                        </option>
+                    {% endfor %}
+                </select>
+                <button type="submit" class="btn btn-primary">Recherche</button>
+            </form>
+        </div>
+
+        {% if selectedCategory %}
+            <h2 class="text-center mt-4 mb-3">
+                Catégorie sélectionnée : {{ selectedCategory.nomCategorie }}
+            </h2>
+        {% endif %}
+
+        <div class="row justify-content-around">
+            {% for licencie in licencies %}
+                <div class="card text-center mb-3" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title font-weight-bold">{{ licencie.nom }} {{ licencie.prenom }}</h5>
+                        <p class="card-text">Numéro de licence : {{ licencie.numLicence }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Contact;
 use App\Form\ContactType;
+use App\Repository\CategorieRepository;
 use App\Repository\ContactRepository;
+use App\Repository\LicencieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -110,4 +112,42 @@ class ContactController extends AbstractController
         $this->addFlash('success', 'Votre contact a bien été supprimé');
         return $this->redirectToRoute('contact');
     }
+
+   
+    #[Route('/contactParCategorie', name: 'contactParCategorie')]
+    public function contactParCategorie(Request $request, CategorieRepository $categorieRepository, LicencieRepository $licencieRepository, ContactRepository $contactRepository): Response
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        $categories = $categorieRepository->findAll();
+        $categoryId = $request->query->get('category');
+        $selectedCategory = null;
+        $contacts = [];
+        $contacts = $contactRepository->findAll();
+        $ccontactId = $request->query->get('contact');
+        $selectedContact = null;
+
+        if ($categoryId) {
+            $selectedCategory = $categorieRepository->find($categoryId);
+            if ($selectedCategory) {
+                $licencies = $selectedCategory->getLicencies();
+    
+                foreach ($licencies as $licencie) {
+                    $contacts = $licencie->getContact();
+                    }
+                }
+        }
+
+        return $this->render('Frontend/contactParCategorie.html.twig', [
+            'controller_name' => 'LicencieController',
+            'categories' => $categories,
+            'contacts' => $contacts,
+            'selectedCategory' => $selectedCategory ?? null,
+        ]);
+    }
+    
+    
+
+    
+
 }

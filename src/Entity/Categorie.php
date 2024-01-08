@@ -9,29 +9,35 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
+
 #[ORM\Entity(repositoryClass: CategorieRepository::class)]
-#[UniqueEntity('nomCategorie')]
+#[UniqueEntity("nomCategorie")]
+
 class Categorie
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+
     private ?int $id = null;
 
-    #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: Licencie::class)]
-    private Collection $categorie;
+    
+     #[ORM\OneToMany(mappedBy:"categorie", targetEntity:Licencie::class)]
+     
+    private Collection $licencies;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    #[Assert\NotBlank()]
+     #[ORM\Column(type:"string", length:255, nullable:true)]
+     #[Assert\NotBlank()]
+     
     private ?string $nomCategorie = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(type:"string", length:255, nullable:true)]
     #[Assert\NotBlank()]
     private ?string $codeRaccourcie = null;
 
     public function __construct()
     {
-        $this->categorie = new ArrayCollection();
+        $this->licencies = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -40,29 +46,29 @@ class Categorie
     }
 
     /**
-     * @return Collection<int, Licencie>
+     * @return Collection|Licencie[]
      */
-    public function getCategorie(): Collection
+    public function getLicencies(): Collection
     {
-        return $this->categorie;
+        return $this->licencies;
     }
 
-    public function addCategorie(Licencie $categorie): static
+    public function addLicencie(Licencie $licencie): self
     {
-        if (!$this->categorie->contains($categorie)) {
-            $this->categorie->add($categorie);
-            $categorie->setCategorie($this);
+        if (!$this->licencies->contains($licencie)) {
+            $this->licencies[] = $licencie;
+            $licencie->setCategorie($this);
         }
 
         return $this;
     }
 
-    public function removeCategorie(Licencie $categorie): static
+    public function removeLicencie(Licencie $licencie): self
     {
-        if ($this->categorie->removeElement($categorie)) {
+        if ($this->licencies->removeElement($licencie)) {
             // set the owning side to null (unless already changed)
-            if ($categorie->getCategorie() === $this) {
-                $categorie->setCategorie(null);
+            if ($licencie->getCategorie() === $this) {
+                $licencie->setCategorie(null);
             }
         }
 
@@ -74,7 +80,7 @@ class Categorie
         return $this->nomCategorie;
     }
 
-    public function setNomCategorie(?string $nomCategorie): static
+    public function setNomCategorie(?string $nomCategorie): self
     {
         $this->nomCategorie = $nomCategorie;
 
@@ -86,15 +92,10 @@ class Categorie
         return $this->codeRaccourcie;
     }
 
-    public function setCodeRaccourcie(?string $codeRaccourcie): static
+    public function setCodeRaccourcie(?string $codeRaccourcie): self
     {
         $this->codeRaccourcie = $codeRaccourcie;
 
         return $this;
-    }
-
-    public function __toString()
-    {
-        return $this->nomCategorie;
     }
 }

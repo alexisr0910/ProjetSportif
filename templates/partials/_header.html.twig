@@ -48,9 +48,20 @@
         <li class="nav-item">
           <a class="nav-link" href="{{ path('app_login') }}">
             Connexion
-                    
           </a>
         </li>
+        {% if is_granted('ROLE_ADMIN') or  is_granted('ROLE_EDUCATEUR') %}
+        <li class="nav-item">
+        <a class="nav-link" href="{{ path('licenciesParCategorie') }}">
+         Chercher un licencié 
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ path('contactParCategorie') }}">
+         Chercher un contact 
+        </a>
+      </li>
+      {% endif %}
       </ul>
     </div>
   </nav>

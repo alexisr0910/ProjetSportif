@@ -48,7 +48,7 @@
               <th scope="row">{{ licencie.numlicence }}</th>
               <td>{{ licencie.nom }}</td>
               <td>{{ licencie.prenom }}</td>
-              <td>{{ licencie.categorie }}</td>
+              <td>{{ licencie.categorie.nomCategorie }}</td>
               <td><a href="{{ path('updateLicencie', {id: licencie.id}) }}" class="btn btn-secondary">Modifier</a></td>
               <td><a href="{{ path('deleteLicencie', {id: licencie.id}) }}" class="btn btn-danger">Supprimer</a></td>
             </tr>
