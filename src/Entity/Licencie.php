@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Entity;
+
 use App\Repository\LicencieRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -28,9 +29,8 @@ class Licencie
     #[ORM\Column(nullable: true)]
     private ?int $numLicence = null;
 
-    #[ORM\OneToMany(mappedBy: 'contact', targetEntity: Contact::class, cascade: ['persist', 'remove'])]
-    private Collection $contact;
-
+    #[ORM\OneToMany(mappedBy: 'licencie', targetEntity: Contact::class)]
+    private Collection $contacts;
 
     #[ORM\OneToOne(mappedBy: 'educateur', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
@@ -43,7 +43,8 @@ class Licencie
 
     public function __construct()
     {
-        $this->contact = new ArrayCollection();
+        $this->contacts = new ArrayCollection();
+
     }
 
     public function getId(): ?int
@@ -86,20 +87,18 @@ class Licencie
 
         return $this;
     }
-
-   
-    /**
+ /**
      * @return Collection|Contact[]
      */
-    public function getContact(): Collection
+    public function getContacts(): Collection
     {
-        return $this->contact;
+        return $this->contacts;
     }
 
     public function addContact(Contact $contact): self
     {
-        if (!$this->contact->contains($contact)) {
-            $this->contact[] = $contact;
+        if (!$this->contacts->contains($contact)) {
+            $this->contacts[] = $contact;
             $contact->setLicencie($this);
         }
 
@@ -108,7 +107,7 @@ class Licencie
 
     public function removeContact(Contact $contact): self
     {
-        if ($this->contact->removeElement($contact)) {
+        if ($this->contacts->removeElement($contact)) {
             // set the owning side to null (unless already changed)
             if ($contact->getLicencie() === $this) {
                 $contact->setLicencie(null);

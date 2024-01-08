@@ -50,7 +50,6 @@ class AppFixtures extends Fixture
             $contact = new Contact();
             $contact
                 ->setLicencie($licencie)
-
                 ->setNom('nomContact  ' . $this->faker->word())
                 ->setPrenom('prenomContact  ' . $this->faker->word())
                 ->setEmail('emailContact  ' . $i)

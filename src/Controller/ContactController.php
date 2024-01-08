@@ -113,7 +113,7 @@ class ContactController extends AbstractController
         return $this->redirectToRoute('contact');
     }
 
-   
+
     #[Route('/contactParCategorie', name: 'contactParCategorie')]
     public function contactParCategorie(Request $request, CategorieRepository $categorieRepository, LicencieRepository $licencieRepository, ContactRepository $contactRepository): Response
     {
@@ -123,31 +123,25 @@ class ContactController extends AbstractController
         $categoryId = $request->query->get('category');
         $selectedCategory = null;
         $contacts = [];
-        $contacts = $contactRepository->findAll();
-        $ccontactId = $request->query->get('contact');
-        $selectedContact = null;
+       
 
         if ($categoryId) {
             $selectedCategory = $categorieRepository->find($categoryId);
             if ($selectedCategory) {
-                $licencies = $selectedCategory->getLicencies();
-    
-                foreach ($licencies as $licencie) {
-                    $contacts = $licencie->getContact();
+                foreach ($selectedCategory->getLicencies() as $licencie) {
+                    foreach ($licencie->getContacts() as $contact) {
+                        $contacts[] = $contact;
                     }
                 }
+                
+            }
         }
-
+        
         return $this->render('Frontend/contactParCategorie.html.twig', [
-            'controller_name' => 'LicencieController',
             'categories' => $categories,
             'contacts' => $contacts,
             'selectedCategory' => $selectedCategory ?? null,
         ]);
     }
-    
-    
-
-    
 
 }

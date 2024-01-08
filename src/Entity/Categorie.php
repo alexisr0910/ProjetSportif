@@ -9,29 +9,23 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
-
 #[ORM\Entity(repositoryClass: CategorieRepository::class)]
-#[UniqueEntity("nomCategorie")]
-
+#[UniqueEntity('nomCategorie')]
 class Categorie
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-
     private ?int $id = null;
 
-    
-     #[ORM\OneToMany(mappedBy:"categorie", targetEntity:Licencie::class)]
-     
-    private Collection $licencies;
+    #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: Licencie::class)]
+    private Collection $licencies; 
 
-     #[ORM\Column(type:"string", length:255, nullable:true)]
-     #[Assert\NotBlank()]
-     
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\NotBlank()]
     private ?string $nomCategorie = null;
 
-    #[ORM\Column(type:"string", length:255, nullable:true)]
+    #[ORM\Column(length: 255, nullable: true)]
     #[Assert\NotBlank()]
     private ?string $codeRaccourcie = null;
 
@@ -66,7 +60,6 @@ class Categorie
     public function removeLicencie(Licencie $licencie): self
     {
         if ($this->licencies->removeElement($licencie)) {
-            // set the owning side to null (unless already changed)
             if ($licencie->getCategorie() === $this) {
                 $licencie->setCategorie(null);
             }
@@ -80,7 +73,7 @@ class Categorie
         return $this->nomCategorie;
     }
 
-    public function setNomCategorie(?string $nomCategorie): self
+    public function setNomCategorie(?string $nomCategorie): static
     {
         $this->nomCategorie = $nomCategorie;
 
@@ -92,10 +85,15 @@ class Categorie
         return $this->codeRaccourcie;
     }
 
-    public function setCodeRaccourcie(?string $codeRaccourcie): self
+    public function setCodeRaccourcie(?string $codeRaccourcie): static
     {
         $this->codeRaccourcie = $codeRaccourcie;
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->nomCategorie;
     }
 }

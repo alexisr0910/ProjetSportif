@@ -8,34 +8,27 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ContactRepository::class)]
-#[UniqueEntity("numeroTel")]
-
+#[UniqueEntity('numeroTel')]
 class Contact
 {
-
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-
     private ?int $id = null;
 
-
-    #[ORM\ManyToOne(inversedBy: "contact")]
+    #[ORM\ManyToOne(inversedBy: 'licencie')]
     #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
-
     private ?Licencie $licencie = null;
-
 
     #[ORM\Column(length: 255, nullable: true)]
     #[Assert\NotBlank()]
-
     private ?string $nom = null;
 
-    #[ORM\Column(type: "string", length: 255, nullable: true)]
+    #[ORM\Column(length: 255, nullable: true)]
     #[Assert\NotBlank()]
     private ?string $prenom = null;
 
-    #[ORM\Column(type: "string", length: 255, nullable: true)]
+    #[ORM\Column(length: 255, nullable: true)]
     #[Assert\NotBlank()]
     private ?string $email = null;
 
@@ -47,8 +40,6 @@ class Contact
     {
         return $this->id;
     }
-
-    
 
     public function getNom(): ?string
     {
@@ -97,8 +88,6 @@ class Contact
 
         return $this;
     }
-
-    // Ajout des méthodes getLicencie et setLicencie
     public function getLicencie(): ?Licencie
     {
         return $this->licencie;

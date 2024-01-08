@@ -113,6 +113,6 @@ class CategorieController extends AbstractController
         return $this->redirectToRoute('categorie');
     }
 
-   
+    
 
 }

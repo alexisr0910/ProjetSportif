@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Licencie;
 use App\Form\LicencieType;
 use App\Repository\CategorieRepository;
-use App\Repository\ContactRepository;
 use App\Repository\LicencieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -136,7 +135,6 @@ class LicencieController extends AbstractController
         }
 
         return $this->render('Frontend/licenciesParCategorie.html.twig', [
-            'controller_name' => 'LicencieController',
             'categories' => $categories,
             'licencies' => $licencies,
             'selectedCategory' => $selectedCategory ?? null,
