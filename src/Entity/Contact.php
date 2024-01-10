@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ContactRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -35,6 +37,14 @@ class Contact
     #[ORM\Column(length: 255, nullable: true)]
     #[Assert\NotBlank()]
     private ?string $numeroTel = null;
+
+    #[ORM\OneToMany(mappedBy: 'idContact', targetEntity: MailContact::class)]
+    private Collection $mailContacts;
+
+    public function __construct()
+    {
+        $this->mailContacts = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -96,6 +106,36 @@ class Contact
     public function setLicencie(?Licencie $licencie): self
     {
         $this->licencie = $licencie;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, MailContact>
+     */
+    public function getMailContacts(): Collection
+    {
+        return $this->mailContacts;
+    }
+
+    public function addMailContact(MailContact $mailContact): static
+    {
+        if (!$this->mailContacts->contains($mailContact)) {
+            $this->mailContacts->add($mailContact);
+            $mailContact->setIdContact($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMailContact(MailContact $mailContact): static
+    {
+        if ($this->mailContacts->removeElement($mailContact)) {
+            // set the owning side to null (unless already changed)
+            if ($mailContact->getIdContact() === $this) {
+                $mailContact->setIdContact(null);
+            }
+        }
 
         return $this;
     }

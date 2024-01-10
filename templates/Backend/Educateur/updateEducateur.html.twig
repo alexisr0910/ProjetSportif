@@ -1,14 +1,14 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    Création d'un Éducateur
+    Modification d'un Éducateur
     
 {% endblock %}
 
 {% block body %}
     <div class="container mt-4">
         <h1 class="display-4">
-            Création d'un Éducateur
+            Modification d'un Éducateur
                     
         </h1>
         <hr class="my-4" />
@@ -21,12 +21,11 @@
                 {{ form_errors(form.email) }}
             </div>
         </div>
-
         <div class="form-group">
-            {{ form_label(form.plainPassword) }}
-            {{ form_widget(form.plainPassword) }}
+            {{ form_label(form.password) }}
+            {{ form_widget(form.password) }}
             <div class="form-error">
-                {{ form_errors(form.plainPassword) }}
+                {{ form_errors(form.password) }}
             </div>
         </div>
 

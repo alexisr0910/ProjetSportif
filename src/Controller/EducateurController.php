@@ -34,7 +34,7 @@ class EducateurController extends AbstractController
             5
         );
 
-        return $this->render('Educateur/educateur.html.twig', [
+        return $this->render('Backend/Educateur/educateur.html.twig', [
             'educateur' => $educateur
         ]);
     }
@@ -64,7 +64,7 @@ class EducateurController extends AbstractController
             return $this->redirectToRoute('educateur');
         }
 
-        return $this->render('Educateur/newEducateur.html.twig', [
+        return $this->render('Backend/Educateur/newEducateur.html.twig', [
             'form' => $form->createView()
         ]);
     }
@@ -93,7 +93,7 @@ class EducateurController extends AbstractController
             return $this->redirectToRoute('educateur');
         }
 
-        return $this->render('Educateur/updateEducateur.html.twig', [
+        return $this->render('Backend/Educateur/updateEducateur.html.twig', [
             'form' => $form->createView(),
         ]);
     }

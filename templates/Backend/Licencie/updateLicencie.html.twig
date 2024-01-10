@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    Création d'un Licencié
+    Modification d'un Licencié
 {% endblock %}
 
 {% block body %}
     <div class="container mt-4">
         <h1 class="display-4">
-            Création d'un Licencié
+            Modification d'un Licencié
         </h1>
         <hr class="my-4" />
         {{ form_start(form) }}
@@ -27,6 +27,7 @@
                 {{ form_errors(form.prenom) }}
             </div>
         </div>
+
         <div class="form-group">
             {{ form_label(form.categorie) }}
             {{ form_widget(form.categorie) }}

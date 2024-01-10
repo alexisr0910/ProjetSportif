@@ -2,6 +2,7 @@
   <div class="container-fluid">
     <a class="navbar-brand" href="#">
       Club Sportif
+          
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -15,54 +16,56 @@
           </a>
         </li>
         {% if is_granted('ROLE_ADMIN') %}
-          <li class="nav-item">
-            <a class="nav-link" href="{{ path('licencie') }}">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownLicences" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Licenciés
                           
             </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{{ path('contact') }}">
-              Contacts
-                          
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{{ path('educateur') }}">
-              Educateurs
-                          
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{{ path('categorie') }}">
-              Catégories
-                          
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{{ path('security.registration') }}">
-              Nouvel Admin 
-            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownLicences">
+              <a class="dropdown-item" href="{{ path('licencie') }}">
+                Licenciés
+              </a>
+              <a class="dropdown-item" href="{{ path('contact') }}">
+                Contacts
+              </a>
+              <a class="dropdown-item" href="{{ path('educateur') }}">
+                Educateurs
+              </a>
+              <a class="dropdown-item" href="{{ path('categorie') }}">
+                Catégories
+              </a>
+            </div>
           </li>
         {% endif %}
         <li class="nav-item">
+          <a class="nav-link" href="{{ path('security.registration') }}">
+            Nouvel Admin
+          </a>
+
+        </li>
+        <li class="nav-item">
           <a class="nav-link" href="{{ path('app_login') }}">
             Connexion
+                      
           </a>
         </li>
-        {% if is_granted('ROLE_ADMIN') or  is_granted('ROLE_EDUCATEUR') %}
-        <li class="nav-item">
-        <a class="nav-link" href="{{ path('licenciesParCategorie') }}">
-         Chercher un licencié 
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{{ path('contactParCategorie') }}">
-         Chercher un contact 
-        </a>
-      </li>
-      {% endif %}
+        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_EDUCATEUR') %}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownSearch" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Rechercher
+                          
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownSearch">
+              <a class="dropdown-item" href="{{ path('licenciesParCategorie') }}">
+                Chercher un licencié
+              </a>
+              <a class="dropdown-item" href="{{ path('contactParCategorie') }}">
+                Chercher un contact
+              </a>
+            </div>
+          </li>
+        {% endif %}
       </ul>
     </div>
-  </nav>
-  
+  </div>
+</nav>

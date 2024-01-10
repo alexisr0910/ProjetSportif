@@ -35,7 +35,7 @@ class LicencieController extends AbstractController
             5
         );
 
-        return $this->render('Licencie/licencie.html.twig', [
+        return $this->render('Backend/Licencie/licencie.html.twig', [
             'licencie' => $licencie
         ]);
     }
@@ -65,7 +65,7 @@ class LicencieController extends AbstractController
             return $this->redirectToRoute('licencie');
         }
 
-        return $this->render('Licencie/newLicencie.html.twig', [
+        return $this->render('Backend/Licencie/newLicencie.html.twig', [
             'form' => $form->createView()
         ]);
     }
@@ -94,7 +94,7 @@ class LicencieController extends AbstractController
             return $this->redirectToRoute('licencie');
         }
 
-        return $this->render('Licencie/updateLicencie.html.twig', [
+        return $this->render('Backend/Licencie/updateLicencie.html.twig', [
             'form' => $form->createView(),
         ]);
     }

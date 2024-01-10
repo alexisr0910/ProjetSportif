@@ -29,10 +29,15 @@ class Categorie
     #[Assert\NotBlank()]
     private ?string $codeRaccourcie = null;
 
+    #[ORM\ManyToMany(targetEntity: MailContact::class, mappedBy: 'destinataires')]
+    private Collection $mailContacts;
+
     public function __construct()
     {
         $this->licencies = new ArrayCollection();
+        $this->mailContacts = new ArrayCollection();
     }
+    
 
     public function getId(): ?int
     {
@@ -95,5 +100,32 @@ class Categorie
     public function __toString()
     {
         return $this->nomCategorie;
+    }
+
+    /**
+     * @return Collection<int, MailContact>
+     */
+    public function getMailContacts(): Collection
+    {
+        return $this->mailContacts;
+    }
+
+    public function addMailContact(MailContact $mailContact): static
+    {
+        if (!$this->mailContacts->contains($mailContact)) {
+            $this->mailContacts->add($mailContact);
+            $mailContact->addDestinataire($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMailContact(MailContact $mailContact): static
+    {
+        if ($this->mailContacts->removeElement($mailContact)) {
+            $mailContact->removeDestinataire($this);
+        }
+
+        return $this;
     }
 }

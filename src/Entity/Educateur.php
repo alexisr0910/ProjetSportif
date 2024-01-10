@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\EducateurRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -38,6 +40,14 @@ class Educateur implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type:'json')]
     #[Assert\NotBlank(message: 'Le champ est obligatoire.')]
     private array $roles = [];
+
+    #[ORM\OneToMany(mappedBy: 'idEducateur', targetEntity: MailEdu::class)]
+    private Collection $mailEdus;
+
+    public function __construct()
+    {
+        $this->mailEdus = new ArrayCollection();
+    }
 
 
     public function getEducateur(): ?Licencie
@@ -140,5 +150,35 @@ class Educateur implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // Si vous stockez des données temporaires ou sensibles sur l'utilisateur, effacez-les ici
         // $this->plainPassword = null;
+    }
+
+    /**
+     * @return Collection<int, MailEdu>
+     */
+    public function getMailEdus(): Collection
+    {
+        return $this->mailEdus;
+    }
+
+    public function addMailEdu(MailEdu $mailEdu): static
+    {
+        if (!$this->mailEdus->contains($mailEdu)) {
+            $this->mailEdus->add($mailEdu);
+            $mailEdu->setIdEducateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMailEdu(MailEdu $mailEdu): static
+    {
+        if ($this->mailEdus->removeElement($mailEdu)) {
+            // set the owning side to null (unless already changed)
+            if ($mailEdu->getIdEducateur() === $this) {
+                $mailEdu->setIdEducateur(null);
+            }
+        }
+
+        return $this;
     }
 }

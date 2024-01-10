@@ -37,7 +37,7 @@ class CategorieController extends AbstractController
             5
         );
 
-        return $this->render('Categorie/categorie.html.twig', [
+        return $this->render('Backend/Categorie/categorie.html.twig', [
             'categorie' => $categorie
         ]);
     }
@@ -65,7 +65,7 @@ class CategorieController extends AbstractController
             return $this->redirectToRoute('categorie');
         }
 
-        return $this->render('Categorie/newCategorie.html.twig', [
+        return $this->render('Backend/Categorie/newCategorie.html.twig', [
             'form' => $form->createView()
         ]);
     }
@@ -93,7 +93,7 @@ class CategorieController extends AbstractController
             return $this->redirectToRoute('categorie');
         }
 
-        return $this->render('Categorie/updateCategorie.html.twig', ['form' => $form->createView(),]);
+        return $this->render('Backend/Categorie/updateCategorie.html.twig', ['form' => $form->createView(),]);
     }
 
     /**

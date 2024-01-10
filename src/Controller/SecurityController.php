@@ -25,7 +25,7 @@ class SecurityController extends AbstractController
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
+        return $this->render('Backend/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     }
 
     #[Route(path: '/logout', name: 'app_logout')]
@@ -48,7 +48,7 @@ class SecurityController extends AbstractController
             $manager->flush();
             return $this->redirectToRoute('app_login');
         }
-        return $this->render('registration/register.html.twig', [
+        return $this->render('Backend/register.html.twig', [
             'form' => $form->createView()
         ]);
     }

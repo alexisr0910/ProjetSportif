@@ -29,10 +29,10 @@ class Licencie
     #[ORM\Column(nullable: true)]
     private ?int $numLicence = null;
 
-    #[ORM\OneToMany(mappedBy: 'licencie', targetEntity: Contact::class)]
+    #[ORM\OneToMany(mappedBy: 'licencie', targetEntity: Contact::class, cascade: ['remove'])]
     private Collection $contacts;
 
-    #[ORM\OneToOne(mappedBy: 'educateur', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(mappedBy: 'educateur', cascade: ['remove'])]
     #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
     private ?Educateur $educateur = null;
 

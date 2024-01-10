@@ -35,7 +35,7 @@ class ContactController extends AbstractController
             5
         );
 
-        return $this->render('Contact/contact.html.twig', [
+        return $this->render('Backend/Contact/contact.html.twig', [
             'contact' => $contact
         ]);
     }
@@ -64,7 +64,7 @@ class ContactController extends AbstractController
             return $this->redirectToRoute('contact');
         }
 
-        return $this->render('Contact/newContact.html.twig', [
+        return $this->render('Backend/Contact/newContact.html.twig', [
             'form' => $form->createView()
         ]);
     }
@@ -93,7 +93,7 @@ class ContactController extends AbstractController
             return $this->redirectToRoute('contact');
         }
 
-        return $this->render('Contact/updateContact.html.twig', ['form' => $form->createView(),]);
+        return $this->render('Backend/Contact/updateContact.html.twig', ['form' => $form->createView(),]);
     }
 
     /**

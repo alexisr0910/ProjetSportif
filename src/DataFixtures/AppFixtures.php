@@ -6,6 +6,8 @@ use App\Entity\Contact;
 use App\Entity\Educateur;
 use App\Entity\Licence;
 use App\Entity\Licencie;
+use App\Entity\MailContact;
+use App\Entity\MailEdu;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -55,6 +57,26 @@ class AppFixtures extends Fixture
                 ->setEmail('emailContact  ' . $i)
                 ->setNumeroTel($this->faker->randomNumber(4, true));
             $manager->persist($contact);
+
+            $mailEdu = new MailEdu();
+            $mailEdu
+                ->setObject('Objet du mail éducateur ' . $this->faker->word())
+                ->setMessage('Contenu du mail éducateur ' . $this->faker->sentence())
+                ->setIdEducateur($educateur)
+                ->setDateEnvoie($this->faker->dateTimeBetween('-1 month', 'now'));
+            $mailEdu->addDestinataire($educateur);
+            $manager->persist($mailEdu);
+
+            // Nouveau code pour MailContact
+            $mailContact = new MailContact();
+            $mailContact
+                ->setObject('Objet du mail contact ' . $this->faker->word())
+                ->setMessage('Contenu du mail contact ' . $this->faker->sentence())
+                ->setIdContact($contact)
+                ->setDateEnvoi($this->faker->dateTimeBetween('-1 month', 'now'));
+            $mailContact->addDestinataire($categorie);
+
+            $manager->persist($mailContact);
 
         }
 
