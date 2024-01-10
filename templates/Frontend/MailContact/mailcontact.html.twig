@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Mails Envoyés
+{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1 class="display-4">Mails Envoyés</h1>
+        <hr class="my-4"/>
+
+        <a href="{{ path('newMailContact') }}" class="btn btn-primary">
+            Nouveau Mail
+        </a>
+
+        <hr class="my-4"/>
+
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success mt-4">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        {% if mailcontact|length > 0 %}
+            <div class="count mt-3">
+                <h5>Nombre de mails envoyés :{{ mailcontact.getTotalItemCount }}</h5>
+            </div>
+
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">Date d'Envoi</th>
+                    <th scope="col">Objet</th>
+                    <th scope="col">Message</th>
+                    <th scope="col">Catégories</th>
+                    
+                    <th scope="col">Suppression</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for mailcontact in mailcontact %}
+                    <tr>
+                        <td>{{ mailcontact.dateEnvoi ? mailcontact.dateEnvoi|date('Y-m-d H:i:s') : 'Non défini' }}</td>
+                        <td>{{ mailcontact.object }}</td>
+                        <td>{{ mailcontact.message }}</td>
+                        <td>
+                            {% for destinataire in mailcontact.destinataires %}
+                                {{ destinataire.nomCategorie }}{% if not loop.last %}, {% endif %}
+                            {% endfor %}
+                        </td>
+                        <td><a href="{{ path('deletemailcontact', {id: mailcontact.id}) }}" class="btn btn-danger">Supprimer</a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="navigation d-flex justify-content-center">{{ knp_pagination_render(mailcontact) }}</div>
+        {% else %}
+            <h5>Il n'y a pas de mails envoyés</h5>
+        {% endif %}
+    </div>
+{% endblock %}
