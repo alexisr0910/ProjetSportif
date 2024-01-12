@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container">
+    <h1>{{ licencie.nom }} {{ licencie.prenom }}</h1>
+
+    <div class="alert alert-success">
+        <table class="table">
+            <tr>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Catégorie</th>
+            </tr>
+            <tr>
+                <td>{{ licencie.nom }}</td>
+                <td>{{ licencie.prenom }}</td>
+                <td>
+                    {% if licencie.categorie is not null %}
+                        {{ licencie.categorie.nomCategorie }}
+                    {% else %}
+                        Aucune catégorie
+                    {% endif %}
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+
+

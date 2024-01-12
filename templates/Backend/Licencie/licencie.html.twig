@@ -40,6 +40,8 @@
             <th scope="col">Catégorie</th>
           <th scope="col">Edition</th>
         <th scope="col">Suppression</th>
+      <th scope="col">Télécharger</th>
+
           </tr>
         </thead>
         <tbody>
@@ -51,6 +53,8 @@
               <td>{{ licencie.categorie is not null ? licencie.categorie.nomCategorie : 'Aucune catégorie' }}</td>
               <td><a href="{{ path('updateLicencie', {id: licencie.id}) }}" class="btn btn-secondary">Modifier</a></td>
               <td><a href="{{ path('deleteLicencie', {id: licencie.id}) }}" class="btn btn-danger">Supprimer</a></td>
+             <td> <a href="{{ path('pdf',{id: licencie.id}) }}"  class="btn btn-danger">Télécharger le PDF</a></td>
+
             </tr>
           {% endfor %}
         </tbody>

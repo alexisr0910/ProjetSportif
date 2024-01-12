@@ -13,6 +13,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use App\Service\PDFService;
+
 
 
 
@@ -38,6 +40,12 @@ class LicencieController extends AbstractController
         return $this->render('Backend/Licencie/licencie.html.twig', [
             'licencie' => $licencie
         ]);
+    }
+    #[Route('/pdf/{id}', name: 'pdf', methods: ['GET'])]
+    public function generetePDF(Licencie $licencie=null, PDFService $pdf) 
+    {
+        $html = $this->renderView('Backend/Licencie/licenciepdf.html.twig',['licencie'=>$licencie,'is_pdf' => true,]);
+        $pdf->showPdfFile($html);   
     }
 
     /**
