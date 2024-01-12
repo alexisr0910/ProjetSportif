@@ -41,7 +41,7 @@
         </thead>
         <tbody>
           {% for categorie in categorie %}
-            <tr>
+            <tr class="table-light">
               <th scope="row">{{ categorie.nomcategorie }}</th>
               <td>{{ categorie.coderaccourcie }}</td>
               <td><a href="{{ path('updateCategorie', {id: categorie.id}) }}" class="btn btn-secondary">Modifier</a></td>

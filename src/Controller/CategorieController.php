@@ -4,13 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Categorie;
 use App\Form\CategorieType;
-use App\Model\SearchData;
 use App\Repository\CategorieRepository;
-use App\Repository\LicencieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\SearchType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,7 +16,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class CategorieController extends AbstractController
 {
-
     /**
      * Redirection et affichages des valeurs 
      *
@@ -36,11 +32,11 @@ class CategorieController extends AbstractController
             $request->query->getInt('page', 1),
             5
         );
-
         return $this->render('Backend/Categorie/categorie.html.twig', [
             'categorie' => $categorie
         ]);
     }
+
     /**
      * Création d'une catégorie 
      *
@@ -64,11 +60,11 @@ class CategorieController extends AbstractController
             $this->addFlash('success', 'Votre catégorie a bien été créée');
             return $this->redirectToRoute('categorie');
         }
-
         return $this->render('Backend/Categorie/newCategorie.html.twig', [
             'form' => $form->createView()
         ]);
     }
+
     /**
      * Modification d'une catégorie
      *
@@ -113,6 +109,6 @@ class CategorieController extends AbstractController
         return $this->redirectToRoute('categorie');
     }
 
-    
+
 
 }

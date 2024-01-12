@@ -12,6 +12,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class MailEduType extends AbstractType
 {
+    /**
+     * Construction du formulaire 
+     *
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     * @return void
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -22,8 +29,8 @@ class MailEduType extends AbstractType
                 'label' => 'Message',
             ])
             ->add('destinataires', EntityType::class, [
-                'class' => Educateur::class, 
-                'choice_label' => 'email', 
+                'class' => Educateur::class,
+                'choice_label' => 'email',
                 'multiple' => true,
                 'required' => false,
                 'label' => 'Destinataires',
@@ -32,7 +39,12 @@ class MailEduType extends AbstractType
                 'label' => 'Envoyer',
             ]);
     }
-
+    /**
+     * Configure les options spécifiques du formulaire
+     *
+     * @param OptionsResolver $resolver
+     * @return void
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

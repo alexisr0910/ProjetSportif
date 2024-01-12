@@ -39,6 +39,7 @@ class LicencieController extends AbstractController
             'licencie' => $licencie
         ]);
     }
+
     /**
      * Création d'un nouveau licencié
      *
@@ -116,7 +117,13 @@ class LicencieController extends AbstractController
         return $this->redirectToRoute('licencie');
     }
 
-
+    /**
+     * Affichage des licenciés par catégorie
+     *
+     * @param Request $request
+     * @param CategorieRepository $categorieRepository
+     * @return Response
+     */
     #[Route('/licenciesParCategorie', name: 'licenciesParCategorie')]
     public function licenciesParCategorie(Request $request, CategorieRepository $categorieRepository): Response
     {
@@ -140,7 +147,7 @@ class LicencieController extends AbstractController
             'selectedCategory' => $selectedCategory ?? null,
         ]);
     }
-   
+
 
 
 

@@ -29,6 +29,9 @@ class RegistrationFormType extends AbstractType
         $builder
             ->add('email', EmailType::class, [
                 'label' => 'email',
+         
+         
+         
                 'label_attr' => [
                     'class' => 'form-label'
                 ],

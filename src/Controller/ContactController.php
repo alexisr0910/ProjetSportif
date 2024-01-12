@@ -114,6 +114,15 @@ class ContactController extends AbstractController
     }
 
 
+    /**
+     * Affichage des contacts par catégorie
+     *
+     * @param Request $request
+     * @param CategorieRepository $categorieRepository
+     * @param LicencieRepository $licencieRepository
+     * @param ContactRepository $contactRepository
+     * @return Response
+     */
     #[Route('/contactParCategorie', name: 'contactParCategorie')]
     public function contactParCategorie(Request $request, CategorieRepository $categorieRepository, LicencieRepository $licencieRepository, ContactRepository $contactRepository): Response
     {
@@ -123,7 +132,7 @@ class ContactController extends AbstractController
         $categoryId = $request->query->get('category');
         $selectedCategory = null;
         $contacts = [];
-       
+
 
         if ($categoryId) {
             $selectedCategory = $categorieRepository->find($categoryId);
@@ -133,10 +142,10 @@ class ContactController extends AbstractController
                         $contacts[] = $contact;
                     }
                 }
-                
+
             }
         }
-        
+
         return $this->render('Frontend/contactParCategorie.html.twig', [
             'categories' => $categories,
             'contacts' => $contacts,

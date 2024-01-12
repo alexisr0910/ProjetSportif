@@ -11,20 +11,27 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class MailContactType extends AbstractType
 {
+    /**
+     * Construction du formulaire 
+     *
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     * @return void
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-           
+
             ->add('object', TextType::class, [
                 'label' => 'Objet',
             ])
             ->add('message', null, [
                 'label' => 'Message',
             ])
-        
+
             ->add('destinataires', EntityType::class, [
-                'class' => 'App\Entity\Categorie', 
-                'choice_label' => 'nomCategorie', 
+                'class' => 'App\Entity\Categorie',
+                'choice_label' => 'nomCategorie',
                 'label' => 'Destinataires',
                 'multiple' => true,
                 'required' => false,
@@ -33,7 +40,12 @@ class MailContactType extends AbstractType
                 'label' => 'Envoyer',
             ]);
     }
-
+    /**
+     * Configure les options spécifiques du formulaire
+     *
+     * @param OptionsResolver $resolver
+     * @return void
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

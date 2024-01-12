@@ -40,7 +40,7 @@
         </thead>
         <tbody>
           {% for educateur in educateur %}
-            <tr>
+            <tr class="table-light">
               <th scope="row">{{ educateur.email }}</th>
               <td>{{ educateur.password }}</td>
               <td><a href="{{ path('updateEducateur', {id: educateur.id}) }}" class="btn btn-secondary">Modifier</a></td>

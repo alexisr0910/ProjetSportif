@@ -21,6 +21,13 @@ class AppFixtures extends Fixture
     {
         $this->faker = Factory::create('fr_FR');
     }
+
+     /**
+      * Fixtures pour les entités
+      *
+      * @param ObjectManager $manager
+      * @return void
+      */
     public function load(ObjectManager $manager): void
     {
         for ($i = 0; $i < 40; $i++) {

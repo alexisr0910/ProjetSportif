@@ -30,9 +30,7 @@ class MailEdu
 
     #[ORM\ManyToMany(targetEntity: Educateur::class, inversedBy: 'mailEdus')]
     private Collection $destinataires;
-
-
-
+    
     public function __construct()
     {
         $this->destinataires = new ArrayCollection();

@@ -28,29 +28,28 @@
 
             <table class="table table-hover">
                 <thead>
-                <tr>
-                    <th scope="col">Date d'Envoi</th>
-                    <th scope="col">Objet</th>
-                    <th scope="col">Message</th>
-                    <th scope="col">Catégories</th>
-                    
-                    <th scope="col">Suppression</th>
-                </tr>
+                    <tr>
+                        <th scope="col">Date d'Envoi</th>
+                        <th scope="col">Objet</th>
+                        <th scope="col">Message</th>
+                        <th scope="col">Catégories</th>
+                        <th scope="col">Suppression</th>
+                    </tr>
                 </thead>
                 <tbody>
-                {% for mailcontact in mailcontact %}
-                    <tr>
-                        <td>{{ mailcontact.dateEnvoi ? mailcontact.dateEnvoi|date('Y-m-d H:i:s') : 'Non défini' }}</td>
-                        <td>{{ mailcontact.object }}</td>
-                        <td>{{ mailcontact.message }}</td>
-                        <td>
-                            {% for destinataire in mailcontact.destinataires %}
-                                {{ destinataire.nomCategorie }}{% if not loop.last %}, {% endif %}
-                            {% endfor %}
-                        </td>
-                        <td><a href="{{ path('deletemailcontact', {id: mailcontact.id}) }}" class="btn btn-danger">Supprimer</a></td>
-                    </tr>
-                {% endfor %}
+                    {% for mailcontact in mailcontact %}
+                        <tr class="table-light">
+                            <td>{{ mailcontact.dateEnvoi ? mailcontact.dateEnvoi|date('Y-m-d H:i:s') : 'Non défini' }}</td>
+                            <td>{{ mailcontact.object }}</td>
+                            <td>{{ mailcontact.message }}</td>
+                            <td>
+                                {% for destinataire in mailcontact.destinataires %}
+                                    {{ destinataire.nomCategorie }}{% if not loop.last %}, {% endif %}
+                                {% endfor %}
+                            </td>
+                            <td><a href="{{ path('deletemailcontact', {id: mailcontact.id}) }}" class="btn btn-danger">Supprimer</a></td>
+                        </tr>
+                    {% endfor %}
                 </tbody>
             </table>
 

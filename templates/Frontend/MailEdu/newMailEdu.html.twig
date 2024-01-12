@@ -6,8 +6,9 @@
 
 {% block body %}
     <div class="container mt-4">
-        <h1 class="display-4">    Créer un nouveau mail pour des éducateurs
-    </h1>
+        <h1 class="display-4">
+            Créer un nouveau mail pour des éducateurs
+        </h1>
         <hr class="my-4"/>
 
         {{ form_start(form) }}
@@ -23,8 +24,6 @@
             {{ form_widget(form.message, {'attr': {'class': 'form-control'}}) }}
             {{ form_errors(form.message) }}
         </div>
-
-      
 
         <div class="mb-3">
             {{ form_label(form.destinataires, 'Destinataires') }}

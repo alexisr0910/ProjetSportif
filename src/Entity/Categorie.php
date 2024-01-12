@@ -19,7 +19,7 @@ class Categorie
     private ?int $id = null;
 
     #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: Licencie::class)]
-    private Collection $licencies; 
+    private Collection $licencies;
 
     #[ORM\Column(length: 255, nullable: true)]
     #[Assert\NotBlank()]
@@ -37,7 +37,6 @@ class Categorie
         $this->licencies = new ArrayCollection();
         $this->mailContacts = new ArrayCollection();
     }
-    
 
     public function getId(): ?int
     {

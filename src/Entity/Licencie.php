@@ -87,7 +87,7 @@ class Licencie
 
         return $this;
     }
- /**
+    /**
      * @return Collection|Contact[]
      */
     public function getContacts(): Collection
@@ -108,7 +108,6 @@ class Licencie
     public function removeContact(Contact $contact): self
     {
         if ($this->contacts->removeElement($contact)) {
-            // set the owning side to null (unless already changed)
             if ($contact->getLicencie() === $this) {
                 $contact->setLicencie(null);
             }

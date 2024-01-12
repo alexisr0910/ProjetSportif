@@ -17,6 +17,16 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 class MailContactController extends AbstractController
 {
 
+
+
+    /**
+     * Redirection et affichages des valeurs 
+     *
+     * @param MailContactRepository $repository
+     * @param PaginatorInterface $paginator
+     * @param Request $request
+     * @return Response
+     */
     #[Route('/mailcontact', name: 'mailcontact', methods: ['GET'])]
     public function index(MailContactRepository $repository, PaginatorInterface $paginator, Request $request): Response
     {
@@ -31,7 +41,13 @@ class MailContactController extends AbstractController
         ]);
     }
 
-
+    /**
+     * Création d'un nouveau mailcontact
+     *
+     * @param EntityManagerInterface $manager
+     * @param Request $request
+     * @return Response
+     */
     #[Route('/newMailContact', name: 'newMailContact', methods: ['GET', 'POST'])]
     #[Security("is_granted('ROLE_ADMIN')", "is_granted('ROLE_EDUCATEUR')")]
 
@@ -55,6 +71,15 @@ class MailContactController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+
+    /**
+     * Suppression d'un mailcontact
+     *
+     * @param EntityManagerInterface $manager
+     * @param Request $request
+     * @param MailContact $mailcontact
+     * @return Response
+     */
     #[Route('/deleteMailContact/{id}', name: 'deletemailcontact', methods: ['GET', 'POST'])]
     #[Security("is_granted('ROLE_ADMIN')", "is_granted('ROLE_EDUCATEUR')")]
     public function deleteMailContact(EntityManagerInterface $manager, MailContact $mailcontact): Response

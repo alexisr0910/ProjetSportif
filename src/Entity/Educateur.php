@@ -37,7 +37,7 @@ class Educateur implements UserInterface, PasswordAuthenticatedUserInterface
 
     private ?string $plainPassword = null;
 
-    #[ORM\Column(type:'json')]
+    #[ORM\Column(type: 'json')]
     #[Assert\NotBlank(message: 'Le champ est obligatoire.')]
     private array $roles = [];
 
@@ -94,30 +94,21 @@ class Educateur implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * Un identifiant visuel qui représente cet utilisateur.
-     *
-     * @see UserInterface
-     */
+
     public function getUserIdentifier(): string
     {
         return (string) $this->email;
     }
 
-    /**
-     * @see UserInterface
-     */
+
     public function getRoles(): array
     {
         $roles = $this->roles;
 
-        // garantit que chaque utilisateur possède le rôle ROLE_USER
         $roles[] = 'ROLE_USER';
 
-        // garantit que chaque éducateur possède le rôle ROLE_EDUCATEUR
         $roles[] = 'ROLE_EDUCATEUR';
 
-        // garantit que chaque administrateur possède le rôle ROLE_ADMIN
         if (in_array('ROLE_ADMIN', $roles)) {
             $roles[] = 'ROLE_ADMIN';
         }
@@ -143,9 +134,6 @@ class Educateur implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @see UserInterface
-     */
     public function eraseCredentials(): void
     {
         // Si vous stockez des données temporaires ou sensibles sur l'utilisateur, effacez-les ici
@@ -173,12 +161,16 @@ class Educateur implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeMailEdu(MailEdu $mailEdu): static
     {
         if ($this->mailEdus->removeElement($mailEdu)) {
-            // set the owning side to null (unless already changed)
             if ($mailEdu->getIdEducateur() === $this) {
                 $mailEdu->setIdEducateur(null);
             }
         }
 
         return $this;
+    }
+
+    public function getContact(): ?Contact
+    {
+        return $this->getEducateur() ? $this->getEducateur()->getContacts() : null;
     }
 }
