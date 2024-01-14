@@ -40,14 +40,14 @@
               </a>
             </div>
           </li>
-        {% endif %}
-        <li class="nav-item">
-          <a class="nav-link" href="{{ path('security.registration') }}">
-            Nouvel Admin
-                      
-          </a>
 
+          <li class="nav-item">
+           <a class="nav-link" href="{{ path('security.registration') }}">
+          Nouvel Admin      
+           </a>
         </li>
+        {% endif %}
+
 
         {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_EDUCATEUR') %}
           <li class="nav-item dropdown">

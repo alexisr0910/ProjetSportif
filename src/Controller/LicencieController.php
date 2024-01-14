@@ -41,6 +41,14 @@ class LicencieController extends AbstractController
             'licencie' => $licencie
         ]);
     }
+
+    /**
+     * Téléchargelent d'un licencié
+     *
+     * @param Licencie $licencie
+     * @param PDFService $pdf
+     */
+
     #[Route('/pdf/{id}', name: 'pdf', methods: ['GET'])]
     public function generetePDF(Licencie $licencie=null, PDFService $pdf) 
     {

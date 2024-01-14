@@ -4,14 +4,11 @@ namespace App\DataFixtures;
 use App\Entity\Categorie;
 use App\Entity\Contact;
 use App\Entity\Educateur;
-use App\Entity\Licence;
 use App\Entity\Licencie;
 use App\Entity\MailContact;
 use App\Entity\MailEdu;
-use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
-use Generator;
 use Faker\Factory;
 
 class AppFixtures extends Fixture
@@ -22,36 +19,38 @@ class AppFixtures extends Fixture
         $this->faker = Factory::create('fr_FR');
     }
 
-     /**
-      * Fixtures pour les entités
-      *
-      * @param ObjectManager $manager
-      * @return void
-      */
+    /**
+     * Fixtures pour les entités
+     *
+     * @param ObjectManager $manager
+     * @return void
+     */
     public function load(ObjectManager $manager): void
     {
-        for ($i = 0; $i < 40; $i++) {
+        for ($i = 0; $i < 10; $i++) {
 
             $educateur = new Educateur();
+            $password = $this->faker->password();
+            $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
             $educateur
-                ->setEmail('email@email.email' . $i)
-                ->setPassword('motdepasse' . $i)
-                ->setRoles($this->faker->randomElement([['ROLE_ADMIN'], ['ROLE_EDUCATEUR']]));
+                ->setEmail($this->faker->email())
+                ->setPassword($hashedPassword)     
+                 ->setRoles($this->faker->randomElement([['ROLE_ADMIN'], ['ROLE_EDUCATEUR']]));
 
             $manager->persist($educateur);
 
 
             $categorie = new Categorie();
             $categorie
-                ->setNomCategorie('m  ' . $this->faker->word())
-                ->setCodeRaccourcie('m' . $this->faker->randomNumber(2, true));
+                ->setNomCategorie($this->faker->word())
+                ->setCodeRaccourcie($this->faker->word());
             $manager->persist($categorie);
             $licencie = new Licencie();
             $licencie
                 ->setCategorie($categorie)
                 ->setEducateur($educateur)
-                ->setNom('NomLicencie ' . $this->faker->word())
-                ->setPrenom('PrenomLicencie  ' . $this->faker->word())
+                ->setNom($this->faker->lastName())
+                ->setPrenom($this->faker->randomElement([$this->faker->firstNameMale(), $this->faker->firstNameFemale()]))
                 ->setNumLicence(mt_rand(0, 9999));
 
             $manager->persist($licencie);
@@ -59,26 +58,25 @@ class AppFixtures extends Fixture
             $contact = new Contact();
             $contact
                 ->setLicencie($licencie)
-                ->setNom('nomContact  ' . $this->faker->word())
-                ->setPrenom('prenomContact  ' . $this->faker->word())
-                ->setEmail('emailContact  ' . $i)
-                ->setNumeroTel($this->faker->randomNumber(4, true));
+                ->setNom($this->faker->lastName())
+                ->setPrenom($this->faker->randomElement([$this->faker->firstNameMale(), $this->faker->firstNameFemale()]))
+                ->setEmail($this->faker->email())
+                ->setNumeroTel($this->faker->e164PhoneNumber());
             $manager->persist($contact);
 
             $mailEdu = new MailEdu();
             $mailEdu
-                ->setObject('Objet du mail éducateur ' . $this->faker->word())
-                ->setMessage('Contenu du mail éducateur ' . $this->faker->sentence())
+                ->setObject($this->faker->sentence($nbWords = 6, $variableNbWords = true))
+                ->setMessage($this->faker->text($maxNbChars = 200))
                 ->setIdEducateur($educateur)
                 ->setDateEnvoie($this->faker->dateTimeBetween('-1 month', 'now'));
             $mailEdu->addDestinataire($educateur);
             $manager->persist($mailEdu);
 
-            // Nouveau code pour MailContact
             $mailContact = new MailContact();
             $mailContact
-                ->setObject('Objet du mail contact ' . $this->faker->word())
-                ->setMessage('Contenu du mail contact ' . $this->faker->sentence())
+                ->setObject($this->faker->sentence($nbWords = 6, $variableNbWords = true))
+                ->setMessage($this->faker->text($maxNbChars = 200))
                 ->setIdContact($contact)
                 ->setDateEnvoi($this->faker->dateTimeBetween('-1 month', 'now'));
             $mailContact->addDestinataire($categorie);
@@ -86,27 +84,6 @@ class AppFixtures extends Fixture
             $manager->persist($mailContact);
 
         }
-
-        /*   $user1 = new User();
-          $user1
-              ->setEmail('alexis@hotmail.com')
-              ->setRoles(['ROLE_ADMIN'])
-              ->setPassword('azerty1');
-          $manager->persist($user1);
-
-          $user2 = new User();
-          $user2
-              ->setEmail('lisa@hotmail.com')
-              ->setRoles(['ROLE_ADMIN'])
-              ->setPassword('azerty12');
-          $manager->persist($user2);
-
-          $user3 = new User();
-          $user3
-              ->setEmail('christian@hotmail.com')
-              ->setRoles(['ROLE_USER'])
-              ->setPassword('azerty123');
-          $manager->persist($user3); */
         $manager->flush();
     }
 }
